@@ -1,0 +1,46 @@
+.input {
+     height: 36px;
+     border-radius: 4px;
+     border: 1px solid #dedede;
+     outline: none;
+     padding: 0 16px;
+     display: inline-block;
+}
+
+.input:focus {
+     border-color: #055b27;
+}
+
+.input-search {
+     width: 260px;
+}
+
+
+
+.input__id, .input__Identity-Number {
+     width: 95%;
+}
+.input__IssureDate, .input__IssurePlace {
+     width: 100%;
+}
+
+.input__name  {
+     width: 90%;
+}
+
+.input-career___title {
+     width: 94%;
+}
+
+.input-career___title, .input__IssurePlace, .input___address {
+     margin: 6px 0;
+}
+
+.top__left-content input {
+     margin: 6px 0;
+}
+
+.input__Identity-IssurePlace, .input___address, .input__Identity-IssureDate, .input___address {
+     width: 100%;
+}
+

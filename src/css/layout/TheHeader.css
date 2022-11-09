@@ -1,0 +1,60 @@
+.header {
+     width: 100%;
+     height: 56px;
+     padding: 16px;
+     display: flex;
+     align-items: center;
+     justify-content: space-between;
+     box-sizing: border-box;
+}
+
+.header__left {
+     display: flex;
+     align-items: center;
+}
+
+.header__left-multitasking {
+     background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat -847px -35px;
+     width: 24px;
+     height: 24px;
+     margin: 0 10px;
+     cursor: pointer;
+     background-position-y: -30px;
+}
+
+.header__right {
+     display: flex;
+     align-items: center;
+}
+
+.header__right-bell {
+     background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat  -788px -30px;
+     width: 24px;
+     height: 24px;
+     cursor: pointer;
+     margin: 0 10px;
+
+}
+
+.header__right-author {
+     display: flex;
+     align-items: center;
+     margin-right: 4px;
+}
+
+.author {
+     margin-right: 10px;
+     width: 36px;
+     height: 36px;
+     border-radius: 50%;
+     background-color: #055B27;
+     cursor: pointer;
+}
+
+.user__login {
+     font-weight: 700;
+     padding-top: 5px;
+     padding-bottom: 5px;
+     font-size: 14px;
+}
+

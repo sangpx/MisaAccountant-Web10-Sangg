@@ -1,0 +1,185 @@
+.dialog {
+     position: fixed;
+     background: #000000af;
+     top: 0;
+     left: 0;
+     right: 0;
+     bottom: 0;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+}
+
+.dialog-wrapper {
+     width: 902px;
+     height: 615px;
+     background-color: #fff;
+     padding: 22px 24px;
+}
+
+/* .item__gender input[type="radio"] {
+     width: 18px;
+     height: 18px;
+     margin: 10px;
+} */
+
+.dialog-header{
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+     box-sizing: border-box;
+     height: 40px;
+}
+
+.dialog-header__title {
+     display: flex;
+}
+
+.dialog-header__title .title {
+     font-weight: 700;
+     font-size: 24px;
+     color: #111;
+}
+
+
+.dialog-header__btn {
+     box-sizing: border-box;
+     position: relative;
+     display: flex;
+     align-items: center;
+     justify-content: flex-start;
+     cursor: pointer;
+}
+
+.dialog-header__checkbox {
+     position: absolute;
+     width: 18px;
+     height: 18px;
+     z-index: 200;
+     cursor: pointer;
+     border-radius: 4px;
+     top: 6px;
+     left: 21px;
+}
+
+.dialog-header__btn div {
+     margin-left: 50px;
+     z-index: 200;
+     font-size: 13px;
+}
+
+
+.dialog-header__icon .icon{
+     font-size: 24px;
+}
+
+.dialog-container{
+     height: calc(100% - 60px - 22px);
+     box-sizing: border-box;
+}
+
+.dialog-container__top {
+     display: flex;
+     height: 230px;
+     align-items: center;
+}
+
+.dialog-container__top--left, .dialog-container__top--right{
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+}
+
+.top__left-content {
+     display: flex;
+     width: 100%;
+}
+
+.item__id {
+     width: 40%;
+}
+
+.item__name {
+     width: 60%;
+}
+
+.item__gender input[type="radio"] {
+     width: 18px;
+     height: 18px;
+}
+
+.item__gender .name__gender {
+     /* display: inline-block; */
+     font-size: 13px;
+     padding: 8px;
+}
+
+.select__input {
+     width: 94%;
+     height: 36px;
+     outline: none;
+     border: 1px solid #dedede;
+     display: inline-block;
+     border-radius: 4px;
+     padding: 0 16px;
+     margin: 10px 0;
+     cursor: pointer;
+}
+
+.item__identity-number {
+     width: 60%;
+}
+
+.item__issue-date {
+     width: 40%;
+}
+
+.details {
+     display: block;
+  	font-weight: 500;
+     font-size: 13px;
+}
+
+
+
+
+
+.dialog-container__bottom {
+     height: calc(100% - 230px);
+     width: 100%;
+}
+
+.user__detail {
+     display: flex;
+     flex-wrap: wrap;
+     justify-content: space-between;
+     width: 700px;
+     margin: 12px 0 0 0;
+     box-sizing: border-box;
+}
+
+.user__detail-top, .user__detail-bottom {
+     display: flex;
+     width: 100%;
+     margin-bottom: 12px ;
+}
+
+.user__detail .input__box {
+     width: 50%;
+}
+
+.user__detail .input__box input{
+     width: 95%;
+     margin-top: 6px;
+}
+
+
+.dialog-footer{
+     height: 60px;
+     display: flex;
+     padding: 12px 0;
+     justify-content: space-between;
+     box-sizing: border-box;
+     border-top: 1px solid #ccc;
+}
+ 

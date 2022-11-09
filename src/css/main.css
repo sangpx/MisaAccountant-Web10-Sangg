@@ -1,0 +1,52 @@
+@import url(../css/base/reset.css);
+@import url(../css/layout/TheSideBar.css);
+@import url(../css/layout/TheHeader.css);
+@import url(../css/layout/ThePage.css);
+@import url(../css/base/button.css);
+@import url(../css/base/combobox.css);
+@import url(../css/base/dialog.css);
+@import url(../css/base/input.css);
+@import url(../css/base/reset.css);
+@import url(../css/base/table.css);
+@import url(../css/base/toast.css);
+@import url(../../src/assets/icofont/icofont.css);
+
+body {
+     margin: 0;
+     padding: 0;
+     font-family: MISA fonts;
+     font-size: 13px;
+     box-sizing: border-box;
+}
+
+@font-face {  
+     font-family: MISA fonts;
+     src: url(../assets/fonts/notosans-regular.2cb88a13.woff2);
+}
+
+
+.container {
+     display: flex;
+     height: 100%;
+}
+
+.content {
+     display: flex;
+     flex-direction: column;
+     width: calc(100% - 200px);
+     height: 100vh;
+     box-sizing: border-box;
+     flex: 3;
+}
+
+.main {
+     padding: 24px;
+     flex: 1;
+     box-sizing: border-box;
+     height: calc(100vh - 56px);
+}
+
+.error {
+     border-color: red;
+}
+
