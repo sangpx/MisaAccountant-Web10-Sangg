@@ -8,14 +8,12 @@
 }
 
 .input:focus {
-     border-color: #055b27;
+     border-color: #2ca01c;
 }
 
 .input-search {
      width: 260px;
 }
-
-
 
 .input__id, .input__Identity-Number {
      width: 95%;

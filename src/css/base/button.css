@@ -3,7 +3,7 @@
      min-width: 80px;
      border-radius: 4px;
      color: white;
-     background-color: #055b27;
+     background-color: #2ca01c;
      border: unset;
      cursor: pointer;
      font-weight: 500;
@@ -25,20 +25,21 @@
      background-color: #fff;
      color: #000;
      border-radius: 4px;
-     border: 1px solid #1f1f1f;
+     border: 1px solid #939393;
+     min-width: 63px;
 }
 
 .btn-store {
-     margin-right: 11px;
+     margin-right: 8px;
 }
 
 /* page__header */
 .btn-add{
-
+     padding: 8px 19px;
 }
 
 .btn-store__add {
-     min-width: 112px;
+     min-width: 114px;
 }
 
 
@@ -49,7 +50,25 @@
      border: none;
      position: absolute;
      top: 18px;
-     right: 20px;
+     right: 40px;
      cursor: pointer;
 }
 
+.icon__reload {
+     width: 33px;
+     height: 33px;
+     outline: none;
+     border: none;
+     background-color: #fff;
+}
+
+.icon__reload i {
+     font-size: 24px;
+     display: inline-block;
+     color: #b8bcc3;
+}
+
+.icon__reload i:hover {
+     color: #58595d;
+     cursor: pointer;
+} 

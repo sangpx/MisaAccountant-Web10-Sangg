@@ -1,4 +1,5 @@
 <template>
+  <!-- main -->
   <div class="main">
     <!-- page__header-->
     <div class="page__header">
@@ -13,19 +14,23 @@
     <div class="page__body">
       <!-- toolbar -->
       <div class="toolbar">
-        <input
-          type="text"
-          placeholder="Tìm theo mã, tên nhân viên"
-          class="input input-search"
-        />
-        <button class="icon_search"></button>
+        <div class="toolbar__input">
+          <input
+            type="text"
+            placeholder="Tìm theo mã, tên nhân viên"
+            class="input input-search"
+          />
+          <button class="icon_search"></button>
+        </div>
+        <button class="icon__reload"><i class="icofont-ui-reply"></i></button>
       </div>
 
       <!-- table -->
       <div class="table">
-        <div style="overflow-x: auto" class="container">
+        <div style="overflow-x: auto; height: 100%">
           <table>
             <thead>
+              <!-- <th class="ms-out-left-white-16"></th> -->
               <tr class="table__tr">
                 <th><input type="checkbox" class="table__input-checkbox" /></th>
                 <th class="th__id">Mã Nhân Viên</th>
@@ -50,223 +55,304 @@
             <tbody>
               <tr class="table__tr">
                 <td><input type="checkbox" class="table__input-checkbox" /></td>
-                <td>Smith</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>Sửa</td>
+                <td>00001</td>
+                <td>Sang</td>
+                <td>Nam</td>
+                <td>01/01/2000</td>
+                <td>0124687522</td>
+                <td>01/01/2018</td>
+                <td>Nam Định</td>
+                <td>Nhân Viên</td>
+                <td>Misa</td>
+                <td>0124978557</td>
+                <td>Hà Nội</td>
+                <td>sang@gmail.com</td>
+                <td>ACB</td>
+                <td>Hà Nội</td>
+                <td>0154212552</td>
+                <td>0125785212</td>
+                <td>
+                  Sửa
+                  <span class="icon__edit"
+                    ><i class="icofont-caret-down"></i
+                  ></span>
+                </td>
               </tr>
               <tr class="table__tr">
                 <td><input type="checkbox" class="table__input-checkbox" /></td>
-                <td>Smith</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>Sửa</td>
+                <td>00001</td>
+                <td>Sang</td>
+                <td>Nam</td>
+                <td>01/01/2000</td>
+                <td>0124687522</td>
+                <td>01/01/2018</td>
+                <td>Nam Định</td>
+                <td>Nhân Viên</td>
+                <td>Misa</td>
+                <td>0124978557</td>
+                <td>Hà Nội</td>
+                <td>sang@gmail.com</td>
+                <td>ACB</td>
+                <td>Hà Nội</td>
+                <td>0154212552</td>
+                <td>0125785212</td>
+                <td>
+                  Sửa
+                  <span class="icon__edit"
+                    ><i class="icofont-caret-down"></i
+                  ></span>
+                </td>
               </tr>
               <tr class="table__tr">
                 <td><input type="checkbox" class="table__input-checkbox" /></td>
-                <td>Smith</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>Sửa</td>
+                <td>00001</td>
+                <td>Sang</td>
+                <td>Nam</td>
+                <td>01/01/2000</td>
+                <td>0124687522</td>
+                <td>01/01/2018</td>
+                <td>Nam Định</td>
+                <td>Nhân Viên</td>
+                <td>Misa</td>
+                <td>0124978557</td>
+                <td>Hà Nội</td>
+                <td>sang@gmail.com</td>
+                <td>ACB</td>
+                <td>Hà Nội</td>
+                <td>0154212552</td>
+                <td>0125785212</td>
+                <td>
+                  Sửa
+                  <span class="icon__edit"
+                    ><i class="icofont-caret-down"></i
+                  ></span>
+                </td>
               </tr>
               <tr class="table__tr">
                 <td><input type="checkbox" class="table__input-checkbox" /></td>
-                <td>Smith</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>Sửa</td>
+                <td>00001</td>
+                <td>Sang</td>
+                <td>Nam</td>
+                <td>01/01/2000</td>
+                <td>0124687522</td>
+                <td>01/01/2018</td>
+                <td>Nam Định</td>
+                <td>Nhân Viên</td>
+                <td>Misa</td>
+                <td>0124978557</td>
+                <td>Hà Nội</td>
+                <td>sang@gmail.com</td>
+                <td>ACB</td>
+                <td>Hà Nội</td>
+                <td>0154212552</td>
+                <td>0125785212</td>
+                <td>
+                  Sửa
+                  <span class="icon__edit"
+                    ><i class="icofont-caret-down"></i
+                  ></span>
+                </td>
               </tr>
               <tr class="table__tr">
                 <td><input type="checkbox" class="table__input-checkbox" /></td>
-                <td>Smith</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>Sửa</td>
+                <td>00001</td>
+                <td>Sang</td>
+                <td>Nam</td>
+                <td>01/01/2000</td>
+                <td>0124687522</td>
+                <td>01/01/2018</td>
+                <td>Nam Định</td>
+                <td>Nhân Viên</td>
+                <td>Misa</td>
+                <td>0124978557</td>
+                <td>Hà Nội</td>
+                <td>sang@gmail.com</td>
+                <td>ACB</td>
+                <td>Hà Nội</td>
+                <td>0154212552</td>
+                <td>0125785212</td>
+                <td>
+                  Sửa
+                  <span class="icon__edit"
+                    ><i class="icofont-caret-down"></i
+                  ></span>
+                </td>
               </tr>
               <tr class="table__tr">
                 <td><input type="checkbox" class="table__input-checkbox" /></td>
-                <td>Smith</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>Sửa</td>
+                <td>00001</td>
+                <td>Sang</td>
+                <td>Nam</td>
+                <td>01/01/2000</td>
+                <td>0124687522</td>
+                <td>01/01/2018</td>
+                <td>Nam Định</td>
+                <td>Nhân Viên</td>
+                <td>Misa</td>
+                <td>0124978557</td>
+                <td>Hà Nội</td>
+                <td>sang@gmail.com</td>
+                <td>ACB</td>
+                <td>Hà Nội</td>
+                <td>0154212552</td>
+                <td>0125785212</td>
+                <td>
+                  Sửa
+                  <span class="icon__edit"
+                    ><i class="icofont-caret-down"></i
+                  ></span>
+                </td>
               </tr>
               <tr class="table__tr">
                 <td><input type="checkbox" class="table__input-checkbox" /></td>
-                <td>Smith</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>Sửa</td>
+                <td>00001</td>
+                <td>Sang</td>
+                <td>Nam</td>
+                <td>01/01/2000</td>
+                <td>0124687522</td>
+                <td>01/01/2018</td>
+                <td>Nam Định</td>
+                <td>Nhân Viên</td>
+                <td>Misa</td>
+                <td>0124978557</td>
+                <td>Hà Nội</td>
+                <td>sang@gmail.com</td>
+                <td>ACB</td>
+                <td>Hà Nội</td>
+                <td>0154212552</td>
+                <td>0125785212</td>
+                <td>
+                  Sửa
+                  <span class="icon__edit"
+                    ><i class="icofont-caret-down"></i
+                  ></span>
+                </td>
               </tr>
               <tr class="table__tr">
                 <td><input type="checkbox" class="table__input-checkbox" /></td>
-                <td>Smith</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>Sửa</td>
+                <td>00001</td>
+                <td>Sang</td>
+                <td>Nam</td>
+                <td>01/01/2000</td>
+                <td>0124687522</td>
+                <td>01/01/2018</td>
+                <td>Nam Định</td>
+                <td>Nhân Viên</td>
+                <td>Misa</td>
+                <td>0124978557</td>
+                <td>Hà Nội</td>
+                <td>sang@gmail.com</td>
+                <td>ACB</td>
+                <td>Hà Nội</td>
+                <td>0154212552</td>
+                <td>0125785212</td>
+                <td>
+                  Sửa
+                  <span class="icon__edit"
+                    ><i class="icofont-caret-down"></i
+                  ></span>
+                </td>
               </tr>
               <tr class="table__tr">
                 <td><input type="checkbox" class="table__input-checkbox" /></td>
-                <td>Smith</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>Sửa</td>
+                <td>00001</td>
+                <td>Sang</td>
+                <td>Nam</td>
+                <td>01/01/2000</td>
+                <td>0124687522</td>
+                <td>01/01/2018</td>
+                <td>Nam Định</td>
+                <td>Nhân Viên</td>
+                <td>Misa</td>
+                <td>0124978557</td>
+                <td>Hà Nội</td>
+                <td>sang@gmail.com</td>
+                <td>ACB</td>
+                <td>Hà Nội</td>
+                <td>0154212552</td>
+                <td>0125785212</td>
+                <td>
+                  Sửa
+                  <span class="icon__edit"
+                    ><i class="icofont-caret-down"></i
+                  ></span>
+                </td>
               </tr>
               <tr class="table__tr">
                 <td><input type="checkbox" class="table__input-checkbox" /></td>
-                <td>Smith</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>Sửa</td>
+                <td>00001</td>
+                <td>Sang</td>
+                <td>Nam</td>
+                <td>01/01/2000</td>
+                <td>0124687522</td>
+                <td>01/01/2018</td>
+                <td>Nam Định</td>
+                <td>Nhân Viên</td>
+                <td>Misa</td>
+                <td>0124978557</td>
+                <td>Hà Nội</td>
+                <td>sang@gmail.com</td>
+                <td>ACB</td>
+                <td>Hà Nội</td>
+                <td>0154212552</td>
+                <td>0125785212</td>
+                <td>
+                  Sửa
+                  <span class="icon__edit"
+                    ><i class="icofont-caret-down"></i
+                  ></span>
+                </td>
               </tr>
               <tr class="table__tr">
                 <td><input type="checkbox" class="table__input-checkbox" /></td>
-                <td>Smith</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>50</td>
-                <td>Sửa</td>
+                <td>00001</td>
+                <td>Sang</td>
+                <td>Nam</td>
+                <td>01/01/2000</td>
+                <td>0124687522</td>
+                <td>01/01/2018</td>
+                <td>Nam Định</td>
+                <td>Nhân Viên</td>
+                <td>Misa</td>
+                <td>0124978557</td>
+                <td>Hà Nội</td>
+                <td>sang@gmail.com</td>
+                <td>ACB</td>
+                <td>Hà Nội</td>
+                <td>0154212552</td>
+                <td>0125785212</td>
+                <td>
+                  Sửa
+                  <span class="icon__edit"
+                    ><i class="icofont-caret-down"></i
+                  ></span>
+                </td>
+              </tr>
+
+              <tr class="table__tr">
+                <td><input type="checkbox" class="table__input-checkbox" /></td>
+                <td>00001</td>
+                <td>Sang</td>
+                <td>Nam</td>
+                <td>01/01/2000</td>
+                <td>0124687522</td>
+                <td>01/01/2018</td>
+                <td>Nam Định</td>
+                <td>Nhân Viên</td>
+                <td>Misa</td>
+                <td>0124978557</td>
+                <td>Hà Nội</td>
+                <td>sang@gmail.com</td>
+                <td>ACB</td>
+                <td>Hà Nội</td>
+                <td>0154212552</td>
+                <td>0125785212</td>
+                <td>
+                  Sửa
+                  <span class="icon__edit"
+                    ><i class="icofont-caret-down"></i
+                  ></span>
+                </td>
               </tr>
             </tbody>
           </table>
@@ -276,7 +362,7 @@
       <!-- paging -->
       <div class="paging">
         <div class="paging__left">
-          <label>Tổng số: <b>1035</b> bản ghi </label>
+          <span>Tổng số: <b>1035</b> bản ghi</span>
         </div>
 
         <div class="paging__right">
@@ -290,19 +376,19 @@
             </select>
           </div>
 
-          <!-- <div class="paging__right-page">
-                        <div class="right-page__content">
-                             <div class="page__prev">Trước</div>
-                             <div class="page__number">
-                                  <div class="number number__one">1</div>
-                                  <div class="number number__two">2</div>
-                                  <div class="number number__three">3</div>
-                                  <div class="number number__ellipsis">...</div>
-                                  <div class="number number__nine">9</div>
-                             </div>
-                             <div class="page__next">Sau</div>
-                        </div>
-                   </div> -->
+          <div class="paging__right-page">
+            <div class="right-page__content">
+              <div class="page__prev">Trước</div>
+              <div class="page__number">
+                <div class="number number__one">1</div>
+                <div class="number number__two">2</div>
+                <div class="number number__three">3</div>
+                <div class="number number__ellipsis">...</div>
+                <div class="number number__nine">9</div>
+              </div>
+              <div class="page__next">Sau</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -310,8 +396,14 @@
 </template>
 
 <script>
+import MISALoading from "../base/MISALoading.vue";
+import MISAToast from "../base/MISAToast.vue";
+import MISAWarning from "../base/MISAWarning.vue";
 export default {
   name: "ThePage",
+  components: MISALoading,
+  MISAToast,
+  MISAWarning,
 };
 </script>
 <style scoped>

@@ -1,5 +1,6 @@
 <template>
-  <div id="dlgEmployeeDetail" style="" class="dialog">
+  <!-- Dialog thông tin Nhân Viên: style="display: none;"-->
+  <div id="dlgEmployeeDetail" style="display: none" class="dialog">
     <div class="dialog-wrapper">
       <!-- dialog-header -->
       <div class="dialog-header">
@@ -40,7 +41,7 @@
                   id="txtEmployeeCode"
                   labels="Mã Nhân Viên"
                   type="text"
-                  required=""
+                  required
                   class="input input__id require"
                 />
               </div>
@@ -53,7 +54,7 @@
                   id="txtEmployeeName"
                   labels="Họ và Tên"
                   type="text"
-                  required=""
+                  required
                   class="input input__name require"
                 />
               </div>
@@ -63,7 +64,7 @@
               <label class="details"
                 >Đơn vị<span style="color: red">*</span></label
               >
-              <select required="" class="select__input" name="select__input">
+              <select required class="select__input" name="select__input">
                 <option value="1">Phòng Nhân Sự</option>
                 <option value="2">Phòng Marketing</option>
                 <option value="3">Phòng CNTT</option>
@@ -80,26 +81,42 @@
             <div class="top__left-content">
               <div class="input__box item__id item__bith">
                 <label class="details">Ngày sinh</label>
-                <input type="date" class="input input__id input__birth" />
+                <div>
+                  <input type="date" class="input input__id input__birth" />
+                </div>
               </div>
               <div class="input__box item__gender">
                 <label class="details">Giới tính</label>
-                <input
-                  type="radio"
-                  name="gender"
-                  checked=""
-                  id="male"
-                  class="male"
-                /><label class="name__gender" for="male"> Nam</label>
-                <input type="radio" name="gender" id="female" class="female" />
-                <label class="name__gender" for="female">Nữ</label>
-                <input
-                  type="radio"
-                  name="gender"
-                  id="difference"
-                  class="difference"
-                />
-                <label class="name__gender" for="difference">Khác</label>
+                <div
+                  style="
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                  "
+                >
+                  <input
+                    type="radio"
+                    name="gender"
+                    checked
+                    id="male"
+                    class="male"
+                  />
+                  <label class="name__gender" for="male">Nam</label>
+                  <input
+                    type="radio"
+                    name="gender"
+                    id="female"
+                    class="female"
+                  />
+                  <label class="name__gender" for="female">Nữ</label>
+                  <input
+                    type="radio"
+                    name="gender"
+                    id="difference"
+                    class="difference"
+                  />
+                  <label class="name__gender" for="difference">Khác</label>
+                </div>
               </div>
             </div>
 
@@ -139,13 +156,7 @@
               </div>
               <div class="input__box">
                 <label class="details">Email</label>
-                <input
-                  id="txtEmail"
-                  labels="Email"
-                  required=""
-                  type="text"
-                  class="input require"
-                />
+                <input id="txtEmail" labels="Email" type="text" class="input" />
               </div>
             </div>
             <div class="user__detail-bottom">
@@ -183,7 +194,7 @@
 </template>
 <script>
 export default {
-  name: "TheDialog",
+  name: "MISADialog",
 };
 </script>
 <style scoped>

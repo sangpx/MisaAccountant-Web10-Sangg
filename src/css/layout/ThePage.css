@@ -15,7 +15,6 @@
      height: calc(100% - 36px);
      display: flex;
      flex-direction: column;
-     justify-content: space-between;
      box-sizing: border-box;
      background-color: #fff;
 }
@@ -23,7 +22,7 @@
 
 .toolbar {
      width: 100%;
-     padding: 12px 16px;
+     padding: 12px 0px;
      display: flex;
      align-items: center;
      justify-content: flex-end;
@@ -31,11 +30,14 @@
      position: relative;
 }
 
+.toolbar__input {
+     margin-left: 8px;
+}
+
 
 .paging {
      height: 56px;
      display: flex;
-     justify-content: space-between;
      align-items: center;
      padding: 0 6px;
      box-sizing: border-box;
@@ -54,7 +56,6 @@
      display: flex;
      align-items: center;
      justify-content: flex-end;
-     height: 100%;
 }
 
 .paging__right-select {
@@ -67,11 +68,13 @@
      cursor: pointer;
      border-radius: 4px;
      border-color: #babec5;
+     text-align: center;
 }
 
-.paging__right-page {
-     width: 27%;
+.select__paging:focus {
+     border-color: #2ca01c;
 }
+
 
 .right-page__content{
      display: flex;

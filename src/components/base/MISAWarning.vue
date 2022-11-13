@@ -1,5 +1,6 @@
 <template>
-  <div class="toast-message" style="">
+  <!-- toast-cảnh báo -->
+  <div class="toast-message" style="display: none">
     <div class="toast__warning-duplicate" style="display: none">
       <div class="toast__warning-content">
         <div class="toast__icon"><i class="icofont-warning"></i></div>
@@ -15,16 +16,7 @@
     <div class="toast__warning-empty">
       <div class="toast__warning-empty--container">
         <div class="toast__warning-empty--content">
-          <div class="toast__icon"><i class="icofont-warning"></i></div>
-          Mã Nhân Viên không được phép để trống.
-        </div>
-        <div class="toast__warning-empty--content">
-          <div class="toast__icon"><i class="icofont-warning"></i></div>
-          Họ và Tên không được phép để trống.
-        </div>
-        <div class="toast__warning-empty--content">
-          <div class="toast__icon"><i class="icofont-warning"></i></div>
-          Email không được phép để trống.
+          <div class="toast__text"></div>
         </div>
       </div>
       <div class="toast__warning-btn">
@@ -36,7 +28,7 @@
 
 <script>
 export default {
-  name: "TheToastMessage",
+  name: "MISAWarning",
 };
 </script>
 

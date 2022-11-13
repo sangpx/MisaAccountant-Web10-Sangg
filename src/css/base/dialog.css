@@ -103,27 +103,47 @@
      width: 60%;
 }
 
-.item__gender input[type="radio"] {
-     width: 18px;
-     height: 18px;
+.item__gender {
+     width: calc(100% - 45%);
 }
 
-.item__gender .name__gender {
-     /* display: inline-block; */
-     font-size: 13px;
-     padding: 8px;
+.male, .female, .difference{
+     width: 22px;
+     height: 22px;
+     display: inline-block;
+     margin-top: 11px;
+}
+
+.name__gender {
+     cursor: pointer;
+}
+
+.item__bith {
+     width: 45%;
+}
+
+.date__bgr {
+     background: url(../../assets/img/Sprites.64af8f61.svg) no-repeat -126px -308px;
+     border: none;
+}
+
+.item__unit-work {
+     
 }
 
 .select__input {
      width: 94%;
      height: 36px;
-     outline: none;
-     border: 1px solid #dedede;
      display: inline-block;
-     border-radius: 4px;
      padding: 0 16px;
      margin: 10px 0;
      cursor: pointer;
+     border-radius: 4px;
+     border: 1px solid #dedede;   
+}
+
+.select__input:focus {
+     border-color: #2ca01c;
 }
 
 .item__identity-number {

@@ -66,12 +66,12 @@
 }
 
 .sidebar-item:hover {
-     background-color: #067933;
+     background-color: #2ca01c;
      cursor: pointer;
 }
 
 .sidebar-item--selected {
-     background-color: #067933;
+     background-color: #2ca01c;
 }
 
 .sidebar-item__icon{

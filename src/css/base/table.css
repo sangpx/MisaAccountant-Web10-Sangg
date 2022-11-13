@@ -1,119 +1,179 @@
-
 .table {
      height: calc(100vh - 260px);
-}
-
-.table__input-checkbox {
+     margin-bottom: 6px;
+   }
+   
+   .table__input-checkbox {
      display: inline-block;
      width: 22px;
      height: 22px;
-}
+   }
    
-
-table {
+   .example::-webkit-scrollbar {
+     display: none;
+   }
+   
+   
+   table {
      border-collapse: collapse;
      border-spacing: 0;
      width: 100%;
      border: 1px solid #ddd;
-}
-
-table tr th:nth-child(1),td:nth-child(1){
-     position:sticky;
-     left:0;
+     overflow-y: scroll;
+   }
+   
+   
+   table tr th:nth-child(1),
+   td:nth-child(1) {
+     position: sticky;
+     left: 0;
      background-color: #fff;
-}
-table tr th{
-     position:sticky;
-     top:0;
-
-}
-
-table thead tr{
-    background-color: #e5e8ec;
-}
-
-table tr th:nth-child(18),td:nth-child(18){
-     position:sticky;
-     right:0;
+   }
+   
+   table tr th:nth-child(18),
+   td:nth-child(18) {
+     position: sticky;
+     right: 0;
      background-color: #fff;
-}
-
-th, td {
-     text-align: left;
+   }
+   
+   table thead tr {
+     background-color: #e5e8ec !important;
+   }
+   
+   
+   th,
+   td {
      padding: 8px;
-     height: 44px;
      border: 1px solid #ccc;
-}
-
-tr:nth-child(even){background-color: #f2f2f2}
-
-
-.th__id{
+   }
+   
+   tbody tr:hover {
+     background-color: #e5f3ff;
+   }
+   
+   tbody tr td:nth-child(2),
+   tbody tr td:nth-child(3),
+   tbody tr td:nth-child(4),  
+   tbody tr td:nth-child(8),
+   tbody tr td:nth-child(9),
+   tbody tr td:nth-child(10),
+   tbody tr td:nth-child(11),
+   tbody tr td:nth-child(12),
+   tbody tr td:nth-child(13),
+   tbody tr td:nth-child(14)
+   {
+     text-align: left;
+   }
+   
+   tbody tr td:nth-child(5),
+   tbody tr td:nth-child(7){
+     text-align: center;
+   }
+   
+   tbody tr td:nth-child(6),
+   tbody tr td:nth-child(11),
+   tbody tr td:nth-child(16),
+   tbody tr td:nth-child(17) {
+     text-align: right;
+   }
+   
+   tbody tr td:nth-child(18) {
+     text-align: center;
+     color: #0383cb;
+     font-weight: 700;
+   }
+   
+   
+   .icon__edit {
+     display: inline-block;
+     margin-left: 10px;
+     width: 27px;
+     height: 20px;
+     cursor: pointer;
+   }
+   
+   .icon__edit:hover {
+     border: 1px solid #004999;
+   }
+   
+   
+        
+   
+   .th__id {
      min-width: 143px;
-}
-.th__name{
+   }
+   .th__name {
      min-width: 155px;
-}
-.th__gender{
+   }
+   .th__gender {
      min-width: 121px;
      width: 121px;
-}
-.th__dateBirth{
+   }
+   .th__dateBirth {
      min-width: 112px;
      width: 112px;
-}
-.th__identity-number{
-     min-width: 88px;
-     width: 88px;
-}
-.th__issure-date{
+   }
+   .th__identity-number {
+     min-width: 124px;
+     width: 124px;
+   }
+   .th__issure-date {
      min-width: 122px;
      width: 122px;
-}
-.th__issure-place{
+   }
+   .th__issure-place {
      min-width: 95px;
      width: 95px;
-}
-.th__career-title{
+   }
+   .th__career-title {
      min-width: 130px;
      width: 130px;
-}
-.th__name-unit--work{
+   }
+   .th__name-unit--work {
      min-width: 133px;
-}
-.th__account-number{
+   }
+   .th__account-number {
      min-width: 130px;
      width: 130px;
-}
-.th__address{
+   }
+   .th__address {
      min-width: 130px;
      width: 130px;
-}
-.th__email{
+   }
+   .th__email {
      min-width: 200px;
      width: 200px;
-}
-.th__name-bank{
+   }
+   .th__name-bank {
      min-width: 130px;
      width: 130px;
-}
-.th__branch-bank{
+   }
+   .th__branch-bank {
      min-width: 130px;
      width: 130px;
-}
-.th__phone-number{
-
+   }
+   .th__phone-number {
      min-width: 150px;
      width: 150px;
- 
-}
-.th__landline-phone{
+   }
+   .th__landline-phone {
      min-width: 95px;
      width: 95px;
-}
-.th__function{
+   }
+   .th__function {
      width: 120px;
      min-width: 120px;
-    
-
-}
+   }
+   
+   .ms-out-left-white-16 {
+     min-width: 16px;
+     max-width: 16px;
+     width: 16px;
+     background: #fff;
+     position: sticky;
+     left: 0px;
+     border: 0;
+     z-index: 25;
+     padding: 0;
+   }
