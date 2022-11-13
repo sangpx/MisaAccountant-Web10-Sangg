@@ -1,6 +1,6 @@
 <template>
   <!-- Toast Message -->
-  <div class="toast-message">
+  <!-- <div class="toast-message">
     <div class="toast__warning-duplicate" style="display: none">
       <div class="toast__warning-content">
         <div class="toast__icon"><i class="icofont-warning"></i></div>
@@ -32,13 +32,14 @@
         <button class="btn toast__warning-yes">Đồng ý</button>
       </div>
     </div>
-  </div>
+  </div> -->
+  <div></div>
 </template>
 
 <script>
 export default {
-  name: "MISAToast",
+  // name: "MISAToast",
 };
 </script>
 
-<style></style>
+<style scoped></style>

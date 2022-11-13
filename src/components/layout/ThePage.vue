@@ -328,7 +328,6 @@
                   ></span>
                 </td>
               </tr>
-
               <tr class="table__tr">
                 <td><input type="checkbox" class="table__input-checkbox" /></td>
                 <td>00001</td>
@@ -393,17 +392,21 @@
       </div>
     </div>
   </div>
+
+  <MISALoading />
+  <MISADialog />
 </template>
 
 <script>
+// import MISAToast from "../base/MISAToast.vue";
 import MISALoading from "../base/MISALoading.vue";
-import MISAToast from "../base/MISAToast.vue";
 import MISAWarning from "../base/MISAWarning.vue";
+import MISADialog from "../base/MISADialog.vue";
 export default {
   name: "ThePage",
   components: MISALoading,
-  MISAToast,
   MISAWarning,
+  MISADialog,
 };
 </script>
 <style scoped>

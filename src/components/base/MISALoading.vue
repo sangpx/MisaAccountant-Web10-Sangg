@@ -1,9 +1,13 @@
 <template>
-  <div class="loading">
-    <div class="loading__content">
-      <div class="loading__icon"></div>
-      <div class="loading__text">Đăng Ký</div>
-    </div>
+  <div class="lds-roller">
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
   </div>
 </template>
 
@@ -14,6 +18,6 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 @import url(../../css/main.css);
 </style>
