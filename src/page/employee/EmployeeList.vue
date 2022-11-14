@@ -65,14 +65,14 @@
                 <td class="th__issure-date">{{ item.IdentityDate }}</td>
                 <td class="th__issure-place">{{ item.IdentityPlace }}</td>
                 <td class="th__career-title">{{ item.PositionName }}</td>
-                <td class="th__name-unit--work"></td>
-                <td class="th__address"></td>
-                <td class="th__email"></td>
-                <td class="th__account-number"></td>
-                <td class="th__name-bank"></td>
-                <td class="th__branch-bank"></td>
-                <td class="th__phone-number"></td>
-                <td class="th__landline-phone"></td>
+                <td class="th__name-unit--work">{{ item.DepartmentName }}</td>
+                <td class="th__account-number">{{ item.PhoneNumber }}</td>
+                <td class="th__address">{{ item.Addresss }}</td>
+                <td class="th__email">{{ item.Email }}</td>
+                <td class="th__name-bank">{{ item.Addresss }}</td>
+                <td class="th__branch-bank">{{ item.Addresss }}</td>
+                <td class="th__phone-number">{{ item.PhoneNumber }}</td>
+                <td class="th__landline-phone">{{ item.PhoneNumber }}</td>
                 <td class="th__function">
                   Sửa
                   <span class="icon__edit"
