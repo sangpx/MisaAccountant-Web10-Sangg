@@ -22,6 +22,14 @@
      overflow-y: scroll;
    }
    
+   table tr th:nth-child(1){
+    background-color: #e5e8ec !important;
+   }
+
+   table tr th:nth-child(18) {
+    background-color: #e5e8ec !important;
+
+   }
    
    table tr th:nth-child(1),
    td:nth-child(1) {
@@ -41,6 +49,9 @@
      background-color: #e5e8ec !important;
    }
    
+   table thead th {
+      text-transform: uppercase;
+   }
    
    th,
    td {
