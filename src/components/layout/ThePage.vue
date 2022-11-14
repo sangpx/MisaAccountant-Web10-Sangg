@@ -393,20 +393,39 @@
     </div>
   </div>
 
-  <MISALoading />
-  <MISADialog />
+  <MISALoading v-show="isShowLoading"></MISALoading>
+  <!-- <MISADialog /> -->
 </template>
 
 <script>
 // import MISAToast from "../base/MISAToast.vue";
 import MISALoading from "../base/MISALoading.vue";
-import MISAWarning from "../base/MISAWarning.vue";
-import MISADialog from "../base/MISADialog.vue";
+// import MISAWarning from "../base/MISAWarning.vue";
+// import MISADialog from "../base/MISADialog.vue";
 export default {
   name: "ThePage",
-  components: MISALoading,
-  MISAWarning,
-  MISADialog,
+  components: { MISALoading },
+  created() {
+    //load du lieu:
+    //hien thi loading
+    this.isShowLoading = true;
+    const fetchAPI = "https://amis.manhnv.net/api/v1/employees";
+    fetch(fetchAPI)
+      .then((res) => res.json())
+      .then((res) => {
+        this.employees = res;
+        this.isShowLoading = false;
+      })
+      .catch((err) => console.log(err));
+  },
+  data() {
+    return {
+      isShowLoading: false,
+      isShowWarning: false,
+      isShowDialog: false,
+      employees: [],
+    };
+  },
 };
 </script>
 <style scoped>
