@@ -1,9 +1,16 @@
 <template>
-  <EmployeeList></EmployeeList>
+  <EmployeeList
+    :addFunction="onShowDialogDetail"
+    @onAddClick="onShowDialogDetail"
+  ></EmployeeList>
 
   <MISALoading v-show="isShowLoading"></MISALoading>
   <MISAToast v-show="isShowToast"></MISAToast>
-  <EmployeeDetail v-show="isShowDialogDetail"></EmployeeDetail>
+  <EmployeeDetail
+    :employeeSelected="employeeSelected"
+    :hiddenDialogFuntion="onHideDialogDetail"
+    v-show="isShowDialogDetail"
+  ></EmployeeDetail>
 </template>
 
 <script>
@@ -12,12 +19,15 @@ import MISALoading from "../base/MISALoading.vue";
 
 import EmployeeList from "../../page/employee/EmployeeList.vue";
 import EmployeeDetail from "../../page/employee/EmployeeDetail.vue";
+
 export default {
   name: "ThePage",
+
   components: { MISALoading, MISAToast, EmployeeDetail, EmployeeList },
+
   created() {
-    //load du lieu:
-    //hien thi loading
+    //load dữ liệu:
+    //hiển thị loading
     this.isShowLoading = true;
     const fetchAPI = "https://amis.manhnv.net/api/v1/employees";
     fetch(fetchAPI)
@@ -28,13 +38,24 @@ export default {
       })
       .catch((err) => console.log(err));
   },
+
   data() {
     return {
       isShowLoading: false,
       isShowToast: false,
       isShowDialogDetail: false,
-      employees: [],
+      employeeSelected: {},
     };
+  },
+
+  methods: {
+    onShowDialogDetail(item) {
+      this.employeeSelected = item;
+      this.isShowDialogDetail = true;
+    },
+    onHideDialogDetail() {
+      this.isShowDialogDetail = false;
+    },
   },
 };
 </script>

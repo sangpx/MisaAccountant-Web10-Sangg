@@ -64,6 +64,24 @@
         <div class="sidebar-item__icon sidebar-item__icon--budget"></div>
         <div class="sidebar-item__text">Ngân sách</div>
       </a>
+      <a class="sidebar-item">
+        <div class="sidebar-item__icon sidebar-item__icon--report"></div>
+        <div class="sidebar-item__text">Báo Cáo</div>
+      </a>
+      <a class="sidebar-item">
+        <div
+          class="sidebar-item__icon sidebar-item__icon--financialAnalysis"
+        ></div>
+        <div class="sidebar-item__text">Phân Tích Tài Chính</div>
+      </a>
+      <a class="sidebar-item">
+        <div class="sidebar-item__icon sidebar-item__icon--loans"></div>
+        <div class="sidebar-item__text">Vay Vốn</div>
+      </a>
+      <a class="sidebar-item">
+        <div class="sidebar-item__icon sidebar-item__icon--knowledge"></div>
+        <div class="sidebar-item__text">Kiến Thức</div>
+      </a>
     </div>
   </div>
 </template>

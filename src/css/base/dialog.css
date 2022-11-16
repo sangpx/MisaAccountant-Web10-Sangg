@@ -8,6 +8,7 @@
      display: flex;
      justify-content: center;
      align-items: center;
+     z-index: 2;
 }
 
 .dialog-wrapper {
@@ -16,12 +17,6 @@
      background-color: #fff;
      padding: 22px 24px;
 }
-
-/* .item__gender input[type="radio"] {
-     width: 18px;
-     height: 18px;
-     margin: 10px;
-} */
 
 .dialog-header{
      display: flex;

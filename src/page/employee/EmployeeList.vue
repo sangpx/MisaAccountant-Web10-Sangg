@@ -6,7 +6,9 @@
       <div class="page__title">Nhân Viên</div>
 
       <div class="page__button">
-        <button class="btn btn-add">Thêm Mới Nhân Viên</button>
+        <button @click="handleShowDialogDetail" id="btnAdd" class="btn btn-add">
+          Thêm Mới Nhân Viên
+        </button>
       </div>
     </div>
 
@@ -30,6 +32,7 @@
           <table>
             <thead>
               <tr class="table__tr">
+                <!-- <th class="ms-out-left-white-16"></th> -->
                 <th><input type="checkbox" class="table__input-checkbox" /></th>
                 <th class="th__id">Mã Nhân Viên</th>
                 <th class="th__name">Tên Nhân Viên</th>
@@ -55,24 +58,32 @@
                 v-for="(item, index) in employees"
                 :key="index"
                 class="table__tr"
+                @dblclick="handleOnRowDblClick(item)"
               >
-                <td><input type="checkbox" class="table__input-checkbox" /></td>
+                <!-- <td class="ms-out-left-white-16"></td> -->
+                <td @dblclick.stop="unDbl">
+                  <input type="checkbox" class="table__input-checkbox" />
+                </td>
                 <td class="th__id">{{ item.EmployeeCode }}</td>
-                <td class="th__name">{{ item.FullName }}</td>
+                <td class="th__name">{{ item.EmployeeName }}</td>
                 <td class="th__gender">{{ item.GenderName }}</td>
-                <td class="th__dateBirth">{{ item.DateOfBirth }}</td>
+                <td class="th__dateBirth">
+                  {{ formatDate(item.DateOfBirth) }}
+                </td>
                 <td class="th__identity-number">{{ item.IdentityNumber }}</td>
-                <td class="th__issure-date">{{ item.IdentityDate }}</td>
+                <td class="th__issure-date">
+                  {{ formatDate(item.IdentityDate) }}
+                </td>
                 <td class="th__issure-place">{{ item.IdentityPlace }}</td>
                 <td class="th__career-title">{{ item.PositionName }}</td>
                 <td class="th__name-unit--work">{{ item.DepartmentName }}</td>
-                <td class="th__account-number">{{ item.PhoneNumber }}</td>
+                <td class="th__account-number">{{ item.BankAccountNumber }}</td>
                 <td class="th__address">{{ item.Addresss }}</td>
                 <td class="th__email">{{ item.Email }}</td>
-                <td class="th__name-bank">{{ item.Addresss }}</td>
-                <td class="th__branch-bank">{{ item.Addresss }}</td>
+                <td class="th__name-bank">{{ item.BankName }}</td>
+                <td class="th__branch-bank">{{ item.BankBranchName }}</td>
                 <td class="th__phone-number">{{ item.PhoneNumber }}</td>
-                <td class="th__landline-phone">{{ item.PhoneNumber }}</td>
+                <td class="th__landline-phone">{{ item.TelephoneNumber }}</td>
                 <td class="th__function">
                   Sửa
                   <span class="icon__edit"
@@ -118,16 +129,25 @@
         </div>
       </div>
     </div>
+
+    <!-- dropdown Xóa -->
+    <!-- <div class="dropdown__menu">
+      <div class="dropdown__list">
+        <div class="dropdown__item">Nhân Bản</div>
+        <div class="dropdown__item">Xóa</div>
+        <div class="dropdown__item">Ngưng sử dụng</div>
+      </div>
+    </div> -->
   </div>
 </template>
 
 <script>
 export default {
   name: "EmployeeList",
-  props: [],
+  props: ["addFunction"],
   created() {
-    //load du lieu:
-    //hien thi loading
+    //load dữ liệu:
+    //hiển thị loading
     this.isShowLoading = true;
     const fetchAPI = "https://amis.manhnv.net/api/v1/employees";
     fetch(fetchAPI)
@@ -142,9 +162,49 @@ export default {
     return {
       isShowLoading: false,
       isShowToast: false,
-      isShowDialogDetail: false,
+      emp: {},
       employees: [],
     };
+  },
+  methods: {
+    /**
+     * @param {Any} date
+     *  Author: Sang - 15/11/2022
+     */
+
+    //xử lý khi click Thêm mới Nhân Viên
+    handleShowDialogDetail() {
+      // this.$emit("onAddClick");
+      this.addFunction();
+    },
+
+    //Ấn double click hiển thị form Thông tin Nhân Viên
+    handleOnRowDblClick(item) {
+      try {
+        //Hiển thị form chi tiết
+
+        this.addFunction(item);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
+    //Định dạng ngày tháng năm sinh
+    formatDate(date) {
+      try {
+        date = new Date(date);
+        //Lấy ngày
+        var day = date.getDate();
+        day = day < 10 ? `0${day}` : day;
+        var month = date.getMonth() + 1;
+        month = month < 10 ? `0${month}` : month;
+        var year = date.getFullYear();
+        return `${day}/${month}/${year}`;
+      } catch (error) {
+        console.log(error);
+        return ``;
+      }
+    },
   },
 };
 </script>

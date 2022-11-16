@@ -1,10 +1,11 @@
 .sidebar {
      width: 200px;
      height: 100vh;
-     background-color: #021E0D;
+     background-color: #393a3d;
      color: #FFFFFF;
      box-sizing: border-box;
-     overflow-y: scroll;
+     display: flex;
+     flex-wrap: wrap;
 }
 
 .sidebar::-webkit-scrollbar {
@@ -49,9 +50,31 @@
 }
 
 .sidebar__bottom {
+     width: 100%;
+     height: calc(100vh - 56px);
      box-sizing: border-box;
      padding: 20px 12px;
+     overflow-y: scroll;
 }
+
+   ::-webkit-scrollbar {
+     width: 5px;
+     height: 8px;
+   }
+   
+   ::-webkit-scrollbar-track {
+     background: #eceef1; 
+   }
+    
+   
+   ::-webkit-scrollbar-thumb {
+     background: #eceef1; 
+   }
+   
+  
+   ::-webkit-scrollbar-thumb:hover {
+     background: #555; 
+   }
 
 .sidebar-item{
      font-size: 12px;
@@ -66,15 +89,16 @@
 }
 
 .sidebar-item:hover {
-     background-color: #2ca01c;
+     background-color: #58595d;
      cursor: pointer;
 }
 
 .sidebar-item--selected {
-     background-color: #2ca01c;
+     background-color: #58595d;
 }
 
 .sidebar-item__icon{
+     margin-top: 5px;
      margin-left: 12px;
      margin-right: 12px;
      width: 24px;
@@ -137,6 +161,23 @@
 }
 .sidebar-item__icon--budget{
      background-position: -382px -1664px;
+}
 
+.sidebar-item__icon--report {
+     background-position:-552px -1636px;
+}
+
+.sidebar-item__icon--financialAnalysis {
+     background-position:-207px -1667px;
+
+}
+
+.sidebar-item__icon--loans {
+     background-position: -382px -1664px;
+}
+
+.sidebar-item__icon--knowledge {
+
+     background-position: -382px -1664px;
 }
 

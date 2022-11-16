@@ -22,7 +22,10 @@
           <button class="dialog-icon btn-question">
             <i class="icon icofont-question-circle"></i>
           </button>
-          <button class="dialog-icon btn-close">
+          <button
+            class="dialog-icon btn-close"
+            @click="this.hiddenDialogFuntion"
+          >
             <i class="icon icofont-close-line"></i>
           </button>
         </div>
@@ -66,8 +69,8 @@
               >
               <select required class="select__input" name="select__input">
                 <option value="1">Phòng Nhân Sự</option>
-                <option value="2">Phòng Marketing</option>
-                <option value="3">Phòng CNTT</option>
+                <option value="2">Phòng Tuyển Sinh</option>
+                <option value="3">Phòng Sản Xuất</option>
               </select>
             </div>
 
@@ -192,11 +195,19 @@
     </div>
   </div>
 </template>
+
 <script>
 export default {
   name: "EmployeeDetail",
+  props: ["hiddenDialogFuntion"],
+  data() {
+    return {
+      employees: [],
+    };
+  },
 };
 </script>
+
 <style scoped>
 @import url(../../css/main.css);
 </style>
