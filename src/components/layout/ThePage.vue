@@ -1,11 +1,15 @@
 <template>
-  <EmployeeList
-    :addFunction="onShowDialogDetail"
-    @onAddClick="onShowDialogDetail"
-  ></EmployeeList>
+  <div>
+    <EmployeeList
+      :addFunction="onShowDialogDetail"
+      @onAddClick="onShowDialogDetail"
+    ></EmployeeList>
+  </div>
 
   <MISALoading v-show="isShowLoading"></MISALoading>
+
   <MISAToast v-show="isShowToast"></MISAToast>
+
   <EmployeeDetail
     :employeeSelected="employeeSelected"
     :hiddenDialogFuntion="onHideDialogDetail"
@@ -28,15 +32,34 @@ export default {
   created() {
     //load dữ liệu:
     //hiển thị loading
-    this.isShowLoading = true;
-    const fetchAPI = "https://amis.manhnv.net/api/v1/employees";
-    fetch(fetchAPI)
-      .then((res) => res.json())
-      .then((res) => {
-        this.employees = res;
-        this.isShowLoading = false;
-      })
-      .catch((err) => console.log(err));
+    // this.isShowLoading = true;
+    // const fetchAPI = "https://amis.manhnv.net/api/v1/employees";
+    // fetch(fetchAPI)
+    //   .then((res) => res.json())
+    //   .then((res) => {
+    //     this.employees = res;
+    //     this.isShowLoading = false;
+    //   })
+    //   .catch((err) => console.log(err));
+  },
+
+  methods: {
+    onShowDialogDetail(employee) {
+      try {
+        console.log(employee);
+        this.isShowDialogDetail = true;
+        this.employeeSelected = employee;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    onHideDialogDetail() {
+      try {
+        this.isShowDialogDetail = false;
+      } catch (error) {
+        console.log(error);
+      }
+    },
   },
 
   data() {
@@ -46,16 +69,6 @@ export default {
       isShowDialogDetail: false,
       employeeSelected: {},
     };
-  },
-
-  methods: {
-    onShowDialogDetail(item) {
-      this.employeeSelected = item;
-      this.isShowDialogDetail = true;
-    },
-    onHideDialogDetail() {
-      this.isShowDialogDetail = false;
-    },
   },
 };
 </script>

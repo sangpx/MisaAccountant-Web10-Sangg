@@ -45,6 +45,7 @@
                   labels="Mã Nhân Viên"
                   type="text"
                   required
+                  v-model="emp.EmployeeCode"
                   class="input input__id require"
                 />
               </div>
@@ -58,6 +59,7 @@
                   labels="Họ và Tên"
                   type="text"
                   required
+                  v-model="emp.EmployeeName"
                   class="input input__name require"
                 />
               </div>
@@ -199,10 +201,25 @@
 <script>
 export default {
   name: "EmployeeDetail",
-  props: ["hiddenDialogFuntion"],
+  props: ["hiddenDialogFuntion", "employeeSelected"],
+
+  created() {
+    this.emp = this.employeeSelected;
+    console.log(this.employeeSelected);
+  },
+
+  watch: {
+    //theo doi su thay doi cua mot thong tin nao do
+    employeeSelected(newValue, oldValue) {
+      this.emp = newValue;
+      console.log("old value", oldValue);
+    },
+  },
+
   data() {
     return {
       employees: [],
+      emp: {},
     };
   },
 };

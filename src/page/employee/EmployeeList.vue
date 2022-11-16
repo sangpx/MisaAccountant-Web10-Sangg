@@ -145,6 +145,7 @@
 export default {
   name: "EmployeeList",
   props: ["addFunction"],
+  components: {},
   created() {
     //load dữ liệu:
     //hiển thị loading
@@ -158,14 +159,7 @@ export default {
       })
       .catch((err) => console.log(err));
   },
-  data() {
-    return {
-      isShowLoading: false,
-      isShowToast: false,
-      emp: {},
-      employees: [],
-    };
-  },
+
   methods: {
     /**
      * @param {Any} date
@@ -174,22 +168,24 @@ export default {
 
     //xử lý khi click Thêm mới Nhân Viên
     handleShowDialogDetail() {
-      // this.$emit("onAddClick");
-      this.addFunction();
+      try {
+        this.addFunction();
+      } catch (error) {
+        console.log(error);
+      }
     },
 
     //Ấn double click hiển thị form Thông tin Nhân Viên
     handleOnRowDblClick(item) {
       try {
         //Hiển thị form chi tiết
-
         this.addFunction(item);
       } catch (error) {
         console.log(error);
       }
     },
 
-    //Định dạng ngày tháng năm sinh
+    //Định dạng ngày tháng năm
     formatDate(date) {
       try {
         date = new Date(date);
@@ -205,6 +201,15 @@ export default {
         return ``;
       }
     },
+  },
+
+  data() {
+    return {
+      isShowLoading: false,
+      isShowToast: false,
+      emp: {},
+      employees: [],
+    };
   },
 };
 </script>

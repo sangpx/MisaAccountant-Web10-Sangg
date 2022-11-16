@@ -8,9 +8,6 @@
      flex-wrap: wrap;
 }
 
-.sidebar::-webkit-scrollbar {
-     display: none;
- }
 
 .sidebar___top {
      width: 100%;
@@ -56,6 +53,11 @@
      padding: 20px 12px;
      overflow-y: scroll;
 }
+
+.sidebar__bottom::-webkit-scrollbar {
+     display: none;
+ }
+
 
    ::-webkit-scrollbar {
      width: 5px;
