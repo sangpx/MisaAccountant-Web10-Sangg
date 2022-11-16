@@ -24,7 +24,7 @@
           />
           <button class="icon_search"></button>
         </div>
-        <button class="icon__reload"><i class="icofont-ui-reply"></i></button>
+        <div class="icon__reload"></div>
       </div>
       <!-- table -->
       <div class="table">
@@ -47,7 +47,7 @@
                 <th class="th__address">Địa Chỉ</th>
                 <th class="th__email">Email</th>
                 <th class="th__name-bank">Tên Ngân Hàng</th>
-                <th class="th__branch-bank">Chi Nhánh Ngân Hàng</th>
+                <th class="th__branch-bank">Chi Nhánh TK Ngân Hàng</th>
                 <th class="th__phone-number">ĐT Di Động</th>
                 <th class="th__landline-phone">ĐT Cố Định</th>
                 <th class="th__function">Chức Năng</th>

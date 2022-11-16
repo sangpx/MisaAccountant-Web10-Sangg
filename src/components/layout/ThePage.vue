@@ -44,10 +44,18 @@ export default {
   },
 
   methods: {
-    onShowDialogDetail(employee) {
+    // onShowDialogDetail(employee) {
+    //   try {
+    //     this.isShowDialogDetail = true;
+    //     this.employeeSelected = employee;
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    // },
+    onShowDialogDetail() {
       try {
         this.isShowDialogDetail = true;
-        this.employeeSelected = employee;
+        // this.employeeSelected = employee;
       } catch (error) {
         console.log(error);
       }

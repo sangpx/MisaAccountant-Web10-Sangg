@@ -50,25 +50,20 @@
      border: none;
      position: absolute;
      top: 18px;
-     right: 40px;
+     right: 57px;
      cursor: pointer;
 }
 
 .icon__reload {
-     width: 33px;
-     height: 33px;
-     outline: none;
-     border: none;
-     background-color: #fff;
+     width: 36px;
+     height: 36px;
+     background-image: url(../../assets/img/Sprites.64af8f61.svg);
+     background-repeat: no-repeat;
+     background-position: -425px -201px;
+     background-position-y: -195px;
 }
 
-.icon__reload i {
-     font-size: 24px;
-     display: inline-block;
-     color: #b8bcc3;
-}
-
-.icon__reload i:hover {
-     color: #58595d;
+.icon__reload:hover {
+    
      cursor: pointer;
 } 
