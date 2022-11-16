@@ -21,8 +21,8 @@
 import MISAToast from "../base/MISAToast.vue";
 import MISALoading from "../base/MISALoading.vue";
 
-import EmployeeList from "../../page/employee/EmployeeList.vue";
-import EmployeeDetail from "../../page/employee/EmployeeDetail.vue";
+import EmployeeList from "../../views/employee/EmployeeList.vue";
+import EmployeeDetail from "../../views/employee/EmployeeDetail.vue";
 
 export default {
   name: "ThePage",
@@ -30,23 +30,22 @@ export default {
   components: { MISALoading, MISAToast, EmployeeDetail, EmployeeList },
 
   created() {
-    //load dữ liệu:
-    //hiển thị loading
-    // this.isShowLoading = true;
-    // const fetchAPI = "https://amis.manhnv.net/api/v1/employees";
-    // fetch(fetchAPI)
-    //   .then((res) => res.json())
-    //   .then((res) => {
-    //     this.employees = res;
-    //     this.isShowLoading = false;
-    //   })
-    //   .catch((err) => console.log(err));
+    // load dữ liệu:
+    // hiển thị loading
+    this.isShowLoading = true;
+    const fetchAPI = "https://amis.manhnv.net/api/v1/employees";
+    fetch(fetchAPI)
+      .then((res) => res.json())
+      .then((res) => {
+        this.employees = res;
+        this.isShowLoading = false;
+      })
+      .catch((err) => console.log(err));
   },
 
   methods: {
     onShowDialogDetail(employee) {
       try {
-        console.log(employee);
         this.isShowDialogDetail = true;
         this.employeeSelected = employee;
       } catch (error) {

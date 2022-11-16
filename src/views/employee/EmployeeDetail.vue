@@ -205,7 +205,6 @@ export default {
 
   created() {
     this.emp = this.employeeSelected;
-    console.log(this.employeeSelected);
   },
 
   watch: {
