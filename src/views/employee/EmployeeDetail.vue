@@ -44,7 +44,6 @@
                   id="txtEmployeeCode"
                   labels="Mã Nhân Viên"
                   type="text"
-                  required
                   v-model="emp.EmployeeCode"
                   class="input input__id require"
                 />
@@ -58,7 +57,6 @@
                   id="txtEmployeeName"
                   labels="Họ và Tên"
                   type="text"
-                  required
                   v-model="emp.EmployeeName"
                   class="input input__name require"
                 />
@@ -74,6 +72,12 @@
                 <option value="2">Phòng Tuyển Sinh</option>
                 <option value="3">Phòng Sản Xuất</option>
               </select>
+              <!-- <Dropdown
+                v-model="selectedCity2"
+                :options="cities"
+                optionLabel="name"
+                :editable="true"
+              /> -->
             </div>
 
             <div class="input__box item__career-title">
@@ -199,8 +203,10 @@
 </template>
 
 <script>
+// import Dropdown from "primevue/dropdown";
 export default {
   name: "EmployeeDetail",
+
   props: ["hiddenDialogFuntion", "employeeSelected"],
 
   created() {

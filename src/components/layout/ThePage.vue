@@ -8,8 +8,6 @@
 
   <MISALoading v-show="isShowLoading"></MISALoading>
 
-  <MISAToast v-show="isShowToast"></MISAToast>
-
   <EmployeeDetail
     :employeeSelected="employeeSelected"
     :hiddenDialogFuntion="onHideDialogDetail"
@@ -18,16 +16,14 @@
 </template>
 
 <script>
-import MISAToast from "../base/MISAToast.vue";
 import MISALoading from "../base/MISALoading.vue";
-
 import EmployeeList from "../../views/employee/EmployeeList.vue";
 import EmployeeDetail from "../../views/employee/EmployeeDetail.vue";
 
 export default {
   name: "ThePage",
 
-  components: { MISALoading, MISAToast, EmployeeDetail, EmployeeList },
+  components: { MISALoading, EmployeeDetail, EmployeeList },
 
   created() {
     // load dữ liệu:
@@ -44,22 +40,28 @@ export default {
   },
 
   methods: {
-    // onShowDialogDetail(employee) {
-    //   try {
-    //     this.isShowDialogDetail = true;
-    //     this.employeeSelected = employee;
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
-    // },
+    /*onShowDialogDetail(employee) {
+      try {
+        this.isShowDialogDetail = true;
+        this.employeeSelected = employee;
+      } catch (error) {
+        console.log(error);
+      }
+    },*/
+
+    /**
+     * Author: Sang - 16/11/2022
+     * */
+    //Show Dialog Thông tin Nhân Viên
     onShowDialogDetail() {
       try {
         this.isShowDialogDetail = true;
-        // this.employeeSelected = employee;
       } catch (error) {
         console.log(error);
       }
     },
+
+    //Ẩn Dialog Thông tin Nhân Viên
     onHideDialogDetail() {
       try {
         this.isShowDialogDetail = false;
@@ -72,7 +74,6 @@ export default {
   data() {
     return {
       isShowLoading: false,
-      isShowToast: false,
       isShowDialogDetail: false,
       employeeSelected: {},
     };

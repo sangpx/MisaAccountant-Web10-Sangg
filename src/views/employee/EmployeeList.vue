@@ -32,7 +32,6 @@
           <table>
             <thead>
               <tr class="table__tr">
-                <!-- <th class="ms-out-left-white-16"></th> -->
                 <th><input type="checkbox" class="table__input-checkbox" /></th>
                 <th class="th__id">Mã Nhân Viên</th>
                 <th class="th__name">Tên Nhân Viên</th>
@@ -60,7 +59,6 @@
                 class="table__tr"
                 @dblclick="handleOnRowDblClick(item)"
               >
-                <!-- <td class="ms-out-left-white-16"></td> -->
                 <td @dblclick.stop="unDbl">
                   <input type="checkbox" class="table__input-checkbox" />
                 </td>
@@ -86,9 +84,9 @@
                 <td class="th__landline-phone">{{ item.TelephoneNumber }}</td>
                 <td class="th__function">
                   Sửa
-                  <span class="icon__edit"
-                    ><i class="icofont-caret-down"></i
-                  ></span>
+                  <span class="icon__edit" @click="handleShowDropMenu">
+                    <i class="icofont-caret-down"></i>
+                  </span>
                 </td>
               </tr>
             </tbody>
@@ -99,7 +97,9 @@
       <!-- paging -->
       <div class="paging">
         <div class="paging__left">
-          <span>Tổng số: <b>1035</b> bản ghi</span>
+          <span
+            >Tổng số: <b>{{ totalRecord }}</b> bản ghi</span
+          >
         </div>
 
         <div class="paging__right">
@@ -131,21 +131,38 @@
     </div>
 
     <!-- dropdown Xóa -->
-    <!-- <div class="dropdown__menu">
+    <div
+      :style="{ top: topDrop, left: leftDrop }"
+      v-if="isShowDropMenu"
+      class="dropdown__menu"
+    >
       <div class="dropdown__list">
         <div class="dropdown__item">Nhân Bản</div>
-        <div class="dropdown__item">Xóa</div>
+        <div class="dropdown__item" @click="handleShowMessDelete">Xóa</div>
         <div class="dropdown__item">Ngưng sử dụng</div>
       </div>
-    </div> -->
+    </div>
   </div>
+
+  <MISAWarmingDelete
+    :hideMessDelete="handleHideShowMessDelete"
+    v-if="isShowMessDelete"
+  />
 </template>
 
 <script>
+// @confirmDelete="handleDeleleEmployeebyID"
+// eslint-disable-next-line no-unused-vars
+import { axios } from "axios";
+import MISAWarmingDelete from "../../components/base/MISAWarmingDelete";
+
 export default {
   name: "EmployeeList",
+
   props: ["addFunction"],
-  components: {},
+
+  components: { MISAWarmingDelete },
+
   created() {
     //load dữ liệu:
     //hiển thị loading
@@ -162,11 +179,9 @@ export default {
 
   methods: {
     /**
-     * @param {Any} date
      *  Author: Sang - 15/11/2022
      */
-
-    //xử lý khi click Thêm mới Nhân Viên
+    //Xử lý khi click Thêm mới Nhân Viên
     handleShowDialogDetail() {
       try {
         this.addFunction();
@@ -201,14 +216,78 @@ export default {
         return ``;
       }
     },
+
+    /**
+     * Author: Sang - 16/11/2022
+     * */
+    //Ấn nút Sửa thì hiện ra dropdown__menu
+    handleShowDropMenu() {
+      try {
+        //hiện dropdown__menu
+        this.isShowDropMenu = true;
+
+        //lấy theo tọa độ trục y:
+        this.topDrop = event.clientY + 10 + "px";
+        //lấy theo tọa độ trục x:
+        this.leftDrop = event.clientX - 110 + "px";
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
+    //Ấn nút Xóa thì hiện ra ToastWarning Message Delete
+    handleShowMessDelete(isShow) {
+      try {
+        // //ấn dropdown__menu
+        this.isShowDropMenu = false;
+
+        //hiển thị delete warning
+        this.isShowMessDelete = isShow;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
+    /**
+     * Author: Sang - 17/11/2022
+     * */
+    //Ẩn ToastWarning Message Delete
+    handleHideShowMessDelete() {
+      this.isShowMessDelete = false;
+    },
+
+    //Xóa Nhân Viên theo id
+    // handleDeleleEmployeebyID(id) {
+    //   try {
+    //     const employ = this;
+    //     axios
+    //       .delete("https://amis.manhnv.net/api/v1/Employees/" + id)
+    //       // eslint-disable-next-line no-unused-vars
+    //       .then((res) => {
+    //         this.handleHideShowMessDelete();
+    //         employ.selectPagesize -= 1;
+    //         employ.totalRecord -= 1;
+    //       });
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    // },
   },
 
   data() {
     return {
+      isShowDropMenu: false,
       isShowLoading: false,
       isShowToast: false,
+      isShowMessDelete: false,
       emp: {},
       employees: [],
+      topDrop: "0",
+      leftDrop: "0",
+      selectPagesize: 10,
+      pageNumber: 0,
+      pageCount: 0,
+      totalRecord: 0,
     };
   },
 };

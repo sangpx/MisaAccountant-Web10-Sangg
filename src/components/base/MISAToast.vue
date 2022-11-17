@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <!-- toast-cảnh báo -->
   <div class="toast-message" style="display: none">
     <div class="toast__warning-duplicate" style="display: none">
@@ -26,7 +26,7 @@
   </div>
 </template>
 
-<script>
+<!-- <script>
 export default {
   name: "MISAToast",
 };
@@ -34,4 +34,4 @@ export default {
 
 <style scoped>
 @import url(../../css/main.css);
-</style>
+</style> --> -->
