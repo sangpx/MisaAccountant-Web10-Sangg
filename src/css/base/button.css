@@ -29,6 +29,7 @@
      min-width: 63px;
 }
 
+
 .btn-store {
      margin-right: 8px;
 }
@@ -55,6 +56,7 @@
 }
 
 .icon__reload {
+     position: relative;
      width: 36px;
      height: 36px;
      background-image: url(../../assets/img/Sprites.64af8f61.svg);
@@ -64,6 +66,18 @@
 }
 
 .icon__reload:hover {
-    
      cursor: pointer;
 } 
+
+.tool-tip-reload:hover::after {
+     content: 'Lấy lại dữ liệu';
+     position: absolute;
+     top: 38px;
+     right: -7px;
+     z-index: 7;
+     min-width: max-content;
+     display: flex;
+     padding: 4px;
+     background-color: #babec5;
+     font-size: 12px;
+}

@@ -64,6 +64,10 @@
 }
 
 
+.dialog-header__icon {
+     position: relative;
+}
+
 .dialog-header__icon .icon{
      font-size: 24px;
 }
@@ -103,12 +107,19 @@
 }
 
 .male, .female, .difference{
-     width: 22px;
-     height: 22px;
+     width: 19px;
+     height: 19px;
      display: inline-block;
-     margin-top: 11px;
+     cursor: pointer;
 }
 
+input[type=checkbox] {
+     accent-color: #2ca01c;
+}
+
+input[type=radio]{
+     accent-color: #2ca01c;
+}
 .name__gender {
      cursor: pointer;
 }
@@ -158,7 +169,6 @@
 
 
 
-
 .dialog-container__bottom {
      height: calc(100% - 230px);
      width: 100%;
@@ -198,3 +208,62 @@
      border-top: 1px solid #ccc;
 }
  
+.tool-tip:first-child:hover::after {
+     content: 'Trợ giúp';
+     position: absolute;
+     top: 27px;
+     right: 37px;
+     min-width: max-content;
+     display: flex;
+     padding: 4px;
+     background-color: #babec5;
+     border-radius: 4px;
+}
+
+.tool-tip:last-child:hover::after {
+     content: 'Đóng (ESC)';
+     position: absolute;
+     top: 27px;
+     right: -36px;
+     min-width: max-content;
+     display: flex;
+     padding: 4px;
+     background-color: #babec5;
+     border-radius: 4px;
+}
+
+.user__detail-top .input__box {
+     position: relative;
+}
+
+.tool-tip-smartPhone:hover::after {
+     content: 'Điện Thoại Di Động';
+     position: absolute;
+     top: -4px;
+     left: 72px;
+     border-radius: 4px;
+     min-width: max-content;
+     display: flex;
+     padding: 4px;
+     background-color: #babec5;
+}
+
+.tool-tip-dtcd:hover::after {
+     content: 'Điện Thoại Cố Định';
+     position: absolute;
+     top: -4px;
+     left: 72px;
+     border-radius: 4px;
+     min-width: max-content;
+     display: flex;
+     padding: 4px;
+     background-color: #babec5;
+}
+
+.errorMsg {
+     border: 1px solid red !important;
+}
+
+.successtMsg {
+     border: 1px solid #2ca01c !important;
+}

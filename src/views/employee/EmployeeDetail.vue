@@ -1,6 +1,7 @@
 <template>
-  <!-- Dialog thông tin Nhân Viên: style="display: none;"-->
-  <div id="dlgEmployeeDetail" style="display: none" class="dialog">
+  <!-- Con của List -->
+  <!-- Dialog thông tin Nhân Viên:-->
+  <div id="dlgEmployeeDetail" class="dialog">
     <div class="dialog-wrapper">
       <!-- dialog-header -->
       <div class="dialog-header">
@@ -19,12 +20,12 @@
         </div>
 
         <div class="dialog-header__icon">
-          <button class="dialog-icon btn-question">
+          <button class="dialog-icon btn-question tool-tip">
             <i class="icon icofont-question-circle"></i>
           </button>
           <button
-            class="dialog-icon btn-close"
-            @click="this.hiddenDialogFuntion"
+            class="dialog-icon btn-close tool-tip"
+            @click="closeDialogDetail"
           >
             <i class="icon icofont-close-line"></i>
           </button>
@@ -36,16 +37,22 @@
         <div class="dialog-container__top">
           <div class="dialog-container__top--left">
             <div class="top__left-content">
+              <div tabindex="1"></div>
               <div class="input__box item__id">
                 <label class="details"
                   >Mã<span style="color: red">*</span></label
                 >
                 <input
-                  id="txtEmployeeCode"
-                  labels="Mã Nhân Viên"
-                  type="text"
+                  tabindex="2"
+                  :class="{
+                    errorMsg: isError.EmployeeCode,
+                    successMsg: isSuccess.EmployeeCode,
+                  }"
+                  :title="titleEmployeeCode"
                   v-model="emp.EmployeeCode"
-                  class="input input__id require"
+                  ref="txtEmployeeCodeRef"
+                  id="txtEmployeeCode"
+                  class="input input__id"
                 />
               </div>
 
@@ -54,11 +61,14 @@
                   >Tên<span style="color: red">*</span></label
                 >
                 <input
-                  id="txtEmployeeName"
-                  labels="Họ và Tên"
-                  type="text"
+                  :class="{
+                    errorMsg: isError.EmployeeName,
+                    successMsg: isSuccess.EmployeeName,
+                  }"
+                  :title="titleEmployeeName"
                   v-model="emp.EmployeeName"
-                  class="input input__name require"
+                  id="txtEmployeeName"
+                  class="input input__name"
                 />
               </div>
             </div>
@@ -72,12 +82,6 @@
                 <option value="2">Phòng Tuyển Sinh</option>
                 <option value="3">Phòng Sản Xuất</option>
               </select>
-              <!-- <Dropdown
-                v-model="selectedCity2"
-                :options="cities"
-                optionLabel="name"
-                :editable="true"
-              /> -->
             </div>
 
             <div class="input__box item__career-title">
@@ -150,22 +154,31 @@
         <div class="dialog-container__bottom">
           <div class="input__box">
             <label class="details">Địa Chỉ</label>
-            <input type="text" class="input input___address" />
+            <input ty0pe="text" class="input input___address" />
           </div>
 
           <div class="user__detail">
             <div class="user__detail-top">
               <div class="input__box">
-                <label class="details">ĐT Di động</label>
+                <label class="details tool-tip-smartPhone">ĐT Di động</label>
                 <input id="txtPhone" type=" text" class="input" />
               </div>
-              <div class="input__box">
+              <div class="input__box tool-tip-dtcd">
                 <label class="details">ĐT Cố định</label>
                 <input type="text" class="input" />
               </div>
               <div class="input__box">
                 <label class="details">Email</label>
-                <input id="txtEmail" labels="Email" type="text" class="input" />
+                <input
+                  id="txtEmail"
+                  :class="{
+                    errorMsg: isError.Email,
+                    successMsg: isSuccess.Email,
+                  }"
+                  :title="titleEmail"
+                  type="text"
+                  class="input"
+                />
               </div>
             </div>
             <div class="user__detail-bottom">
@@ -193,40 +206,143 @@
         </div>
         <div class="dialog-footer__right">
           <button class="btn btn-store">Cất</button>
-          <button id="btn-store__add" class="btn btn-store__add">
+          <button
+            @click="btnAddData"
+            id="btn-store__add"
+            class="btn btn-store__add"
+          >
             Cất và Thêm
           </button>
         </div>
       </div>
     </div>
   </div>
+  <MISAWarningValidate
+    v-if="showWarningValidate"
+    :MessageContent="MessageContent"
+  />
 </template>
 
 <script>
-// import Dropdown from "primevue/dropdown";
+import MISAWarningValidate from "../../components/base/MISAWarningValidate.vue";
 export default {
   name: "EmployeeDetail",
 
-  props: ["hiddenDialogFuntion", "employeeSelected"],
-
-  created() {
-    this.emp = this.employeeSelected;
-  },
-
-  watch: {
-    //theo doi su thay doi cua mot thong tin nao do
-    employeeSelected(newValue, oldValue) {
-      this.emp = newValue;
-      console.log("old value", oldValue);
-    },
+  components: {
+    MISAWarningValidate,
   },
 
   data() {
     return {
+      isShowMessageValidate: false,
       employees: [],
       emp: {},
+      employee: {},
+      Email: "",
+      MessageContent: "",
+      IdentityNumber: "",
+      TelePhoneNumber: "",
+      checkChange: false,
+      isActiveError: false,
+      isCorrect: {},
+      isError: {},
+      isSuccess: {},
+      titleEmployeeCode: "",
+      titleEmployeeName: "",
+      titleEmail: "",
+      warningTitle: [],
     };
   },
+
+  props: {
+    editMode: {
+      type: Number,
+    },
+    employeeSelected: {
+      type: Object,
+    },
+  },
+
+  methods: {
+    /***
+     * Author: SANG
+     * createdBy: SANG
+     * createdDate: 17/11/2022
+     * */
+    //Ấn dấu X thực hiện đóng Dialog Detail
+    closeDialogDetail() {
+      this.$emit("showDialogDetail");
+    },
+
+    /***
+     * Author: SANG
+     * createdBy: SANG
+     * createdDate: 21/11/2022
+     * */
+    //Ấn nút "Cất và Thêm" thực hiện thêm mới dữ liệu và gọi lại Form
+    btnAddData() {
+      try {
+        console.log(this.validateData());
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
+    //Hiển thị Toast Thông Báo khi nhập sai
+    showWarningValidate(isMessage) {
+      this.isShowMessageValidate = isMessage;
+    },
+
+    //Validate Dữ liệu
+    validateData() {
+      try {
+        if (!this.employee.EmployeeCode) {
+          this.showWarningValidate(true);
+          this.MessageContent = "Mã Nhân Viên không được để trống.";
+          this.titleEmployeeCode = "Mã Nhân Viên không được để trống.";
+          this.isError["EmployeeCode"] = true;
+          return false;
+        }
+        if (!this.employee.EmployeeName) {
+          this.showWarningValidate(true);
+          this.MessageContent = "Họ và Tên không được để trống.";
+          this.titleEmployeeName = "Tên không được để trống.";
+          this.isError["EmployeeName"] = true;
+          return false;
+        }
+        // if (!this.employee.Email) {
+        //   this.showWarningValidate(true);
+        //   this.MessageContent = "Email không đúng định dạng.";
+        //   this.titleEmail = "Email không đúng định dạng.";
+
+        //   return false;
+        // }
+
+        return true;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+  },
+
+  created() {
+    if (this.editMode == 1) {
+      this.emp = this.employeeSelected;
+    }
+
+    //gọi API thêm mới Nhân Viên
+  },
+
+  beforeMount() {},
+
+  mounted() {
+    //focus vào ô nhập Mã Nhân Viên
+    this.$refs.txtEmployeeCodeRef.focus();
+  },
+
+  beforeUpdate() {},
+
+  updated() {},
 };
 </script>
 

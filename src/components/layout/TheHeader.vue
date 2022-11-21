@@ -2,14 +2,14 @@
   <div class="header">
     <div class="header__left">
       <div class="header__left-multitasking"></div>
-      <div class="header__left-title">
+      <div class="header__left-title tool-tip-title">
         CÔNG TY TNHH SẢN XUẤT - THƯƠNG MẠI - DỊCH VỤ QUI PHÚC
         <i class="icofont-rounded-down"></i>
       </div>
     </div>
 
     <div class="header__right">
-      <div class="header__right-bell"></div>
+      <div class="header__right-bell tool-tip-bell"></div>
       <div class="header__right-author">
         <div class="author"></div>
         <div class="user__login">

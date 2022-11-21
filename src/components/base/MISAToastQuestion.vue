@@ -5,17 +5,17 @@
       <div class="toast__warning-content">
         <div class="toast__icon"><i class="icofont-warning"></i></div>
         <div class="toast__text">
-          Bạn có thực sự muốn xóa Nhân Viên
-          {{ employeeSelected.EmployeeCode }} không?
+          Dữ liệu đã bị thay đổi. Bạn có muốn cất không?
         </div>
       </div>
       <div class="toast__warning-btn">
-        <button @click="closeMessDelete" class="btn toast__warning-no">
-          Không
-        </button>
-        <button @click="handleDeleteAndHideMess" class="btn toast__warning-yes">
-          Có
-        </button>
+        <div class="toast__warning-btn-right">
+          <button class="btn toast__warning-no">Hủy</button>
+        </div>
+        <div class="toast__warning-btn-left">
+          <button class="btn toast__warning-no">Không</button>
+          <button class="btn toast__warning-yes">Có</button>
+        </div>
       </div>
     </div>
   </div>
@@ -25,54 +25,20 @@
 import axios from "axios";
 
 export default {
-  name: "MISAWarmingDelete",
+  name: "MISAToastQuestion",
 
-  props: {
-    employeeSelected: {
-      type: Object,
-    },
-  },
+  props: {},
 
   methods: {
-    /**
-     * Author: Sang - 17/11/2022
+    /***
+     * Author: SANG
+     * createdBy: SANG
+     * createdDate: 17/11/2022
      * */
-    //Ấn nút "Không" thì Hủy xóa và Đóng Toast Message Delete warning
-    closeMessDelete() {
-      try {
-        this.$emit("showMessageDelete");
-      } catch (error) {
-        console.log(error);
-      }
-    },
-
-    //Call API gọi hàm ở lớp cha để xóa một Nhân Viên
-    handleDeleteAndHideMess() {
-      try {
-        var me = this;
-        axios
-          .delete(
-            "https://amis.manhnv.net/api/v1/Employees/" +
-              me.employeeSelected.EmployeeId
-          )
-          // eslint-disable-next-line no-unused-vars
-          .then((res) => {
-            //đóng form warning delete
-            me.$emit("showMessageDelete");
-
-            //loading lại dữ liệu
-            me.$emit("loadingData");
-          });
-      } catch (error) {
-        console.log(error);
-      }
-    },
   },
 
   data() {
-    return {
-      employee: {},
-    };
+    return {};
   },
 };
 </script>

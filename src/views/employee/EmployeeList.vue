@@ -1,4 +1,5 @@
 <template>
+  <!-- Bố của Detail -->
   <!-- main -->
   <div class="main">
     <!-- page__header-->
@@ -6,7 +7,7 @@
       <div class="page__title">Nhân Viên</div>
 
       <div class="page__button">
-        <button @click="handleShowDialogDetail" id="btnAdd" class="btn btn-add">
+        <button @click="btnShowDialogDetail" id="btnAdd" class="btn btn-add">
           Thêm Mới Nhân Viên
         </button>
       </div>
@@ -24,7 +25,7 @@
           />
           <button class="icon_search"></button>
         </div>
-        <div class="icon__reload"></div>
+        <div class="icon__reload tool-tip-reload"></div>
       </div>
       <!-- table -->
       <div class="table">
@@ -84,7 +85,7 @@
                 <td class="th__landline-phone">{{ item.TelephoneNumber }}</td>
                 <td class="th__function">
                   Sửa
-                  <span class="icon__edit" @click="handleShowDropMenu">
+                  <span class="icon__edit" @click="handleShowDropMenu(item)">
                     <i class="icofont-caret-down"></i>
                   </span>
                 </td>
@@ -145,91 +146,120 @@
   </div>
 
   <MISAWarmingDelete
-    :hideMessDelete="handleHideShowMessDelete"
+    @showMessageDelete="showMessageDelete"
+    :employeeSelected="employeeSelected"
+    @loadingData="loadingData"
     v-if="isShowMessDelete"
   />
+
+  <EmployeeDetail
+    @showDialogDetail="showDialogDetail"
+    :employeeSelected="employeeSelected"
+    :editMode="editMode"
+    v-if="isShowDetail"
+  ></EmployeeDetail>
+  <!-- <MISALoading /> -->
 </template>
 
 <script>
-// @confirmDelete="handleDeleleEmployeebyID"
-// eslint-disable-next-line no-unused-vars
-import { axios } from "axios";
 import MISAWarmingDelete from "../../components/base/MISAWarmingDelete";
+import EmployeeDetail from "../../views/employee/EmployeeDetail.vue";
+// import MISALoading from "../base/MISALoading.vue";
 
 export default {
   name: "EmployeeList",
 
-  props: ["addFunction"],
+  components: {
+    MISAWarmingDelete,
+    EmployeeDetail,
+    // MISALoading,
+  },
 
-  components: { MISAWarmingDelete },
+  props: {},
 
   created() {
-    //load dữ liệu:
-    //hiển thị loading
-    this.isShowLoading = true;
-    const fetchAPI = "https://amis.manhnv.net/api/v1/employees";
-    fetch(fetchAPI)
-      .then((res) => res.json())
-      .then((res) => {
-        this.employees = res;
-        this.isShowLoading = false;
-      })
-      .catch((err) => console.log(err));
+    this.loadingData();
   },
 
   methods: {
     /**
-     *  Author: Sang - 15/11/2022
-     */
-    //Xử lý khi click Thêm mới Nhân Viên
-    handleShowDialogDetail() {
-      try {
-        this.addFunction();
-      } catch (error) {
-        console.log(error);
-      }
-    },
-
+     * Author: SANG
+     * createdBy: SANG
+     * createdDate: 15/11/2022
+     * */
     //Ấn double click hiển thị form Thông tin Nhân Viên
     handleOnRowDblClick(item) {
       try {
+        this.editMode = 1;
         //Hiển thị form chi tiết
-        this.addFunction(item);
+        this.showDialogDetail();
+        this.employeeSelected = item;
       } catch (error) {
         console.log(error);
       }
     },
 
     //Định dạng ngày tháng năm
-    formatDate(date) {
+    formatDate(dob) {
       try {
-        date = new Date(date);
-        //Lấy ngày
-        var day = date.getDate();
-        day = day < 10 ? `0${day}` : day;
-        var month = date.getMonth() + 1;
-        month = month < 10 ? `0${month}` : month;
-        var year = date.getFullYear();
-        return `${day}/${month}/${year}`;
+        let dateConvert = new Date(dob);
+        if (
+          dob &&
+          dateConvert instanceof Date &&
+          !isNaN(dateConvert.valueOf())
+        ) {
+          //Lấy ngày
+          let date = dateConvert.getDate();
+          date = date < 10 ? `0${date}` : date;
+          //lấy tháng
+          var month = dateConvert.getMonth() + 1;
+          month = month < 10 ? `0${month}` : month;
+          //lấy năm
+          var year = dateConvert.getFullYear();
+          dob = `${date}/${month}/${year}`;
+          return dob;
+        } else {
+          return "";
+        }
       } catch (error) {
         console.log(error);
-        return ``;
       }
     },
 
     /**
-     * Author: Sang - 16/11/2022
+     * Author: SANG
+     * createdBy: SANG
+     * createdDate: 16/11/2022
      * */
     //Ấn nút Sửa thì hiện ra dropdown__menu
-    handleShowDropMenu() {
+    handleShowDropMenu(employ) {
       try {
         //hiện dropdown__menu
         this.isShowDropMenu = true;
-
+        this.employeeSelected = employ;
         //lấy theo tọa độ trục y:
         this.topDrop = event.clientY + 10 + "px";
         //lấy theo tọa độ trục x:
         this.leftDrop = event.clientX - 110 + "px";
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
+    //Hiển thị Loading
+    loadingData() {
+      try {
+        //load dữ liệu:
+        //hiển thị loading
+        this.isShowLoading = true;
+        const fetchAPI = "https://amis.manhnv.net/api/v1/employees";
+        fetch(fetchAPI)
+          .then((res) => res.json())
+          .then((res) => {
+            this.employees = res;
+            this.isShowLoading = false;
+          })
+          .catch((err) => console.log(err));
       } catch (error) {
         console.log(error);
       }
@@ -249,41 +279,54 @@ export default {
     },
 
     /**
-     * Author: Sang - 17/11/2022
+     * Author: SANG
+     * createdBy: SANG
+     * createdDate: 17/11/2022
      * */
-    //Ẩn ToastWarning Message Delete
-    handleHideShowMessDelete() {
-      this.isShowMessDelete = false;
+    //Mở - Đóng form Chi Tiết Nhân Viên
+    showDialogDetail() {
+      try {
+        // bằng false -> true - bằng true -> false
+        this.isShowDetail = !this.isShowDetail;
+      } catch (error) {
+        console.log(error);
+      }
     },
 
-    //Xóa Nhân Viên theo id
-    // handleDeleleEmployeebyID(id) {
-    //   try {
-    //     const employ = this;
-    //     axios
-    //       .delete("https://amis.manhnv.net/api/v1/Employees/" + id)
-    //       // eslint-disable-next-line no-unused-vars
-    //       .then((res) => {
-    //         this.handleHideShowMessDelete();
-    //         employ.selectPagesize -= 1;
-    //         employ.totalRecord -= 1;
-    //       });
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
-    // },
+    //Ấn nút Thêm Nhân Viên -> hiện Dialog Thông Tin Nhân Viên
+    btnShowDialogDetail() {
+      try {
+        //editMode = 0 (thêm mới) - editMode = 1 (chỉnh sửa)
+        this.editMode = 0;
+        this.showDialogDetail();
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
+    //Mở - Đóng Toast warning Delete
+    showMessageDelete() {
+      try {
+        // bằng false -> true - bằng true -> false
+        this.isShowMessDelete = !this.isShowMessDelete;
+      } catch (error) {
+        console.log(error);
+      }
+    },
   },
 
   data() {
     return {
+      isShowDetail: false,
       isShowDropMenu: false,
       isShowLoading: false,
       isShowToast: false,
       isShowMessDelete: false,
-      emp: {},
+      employeeSelected: [],
       employees: [],
       topDrop: "0",
       leftDrop: "0",
+      editMode: 0,
       selectPagesize: 10,
       pageNumber: 0,
       pageCount: 0,
