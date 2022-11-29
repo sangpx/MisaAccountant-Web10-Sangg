@@ -25,7 +25,7 @@
           />
           <button class="icon_search"></button>
         </div>
-        <div class="icon__reload tool-tip-reload"></div>
+        <div class="icon__reload tool-tip-reload" @click="btnReLoading"></div>
       </div>
       <!-- table -->
       <div class="table">
@@ -55,8 +55,8 @@
             </thead>
             <tbody>
               <tr
-                v-for="(item, index) in employees"
-                :key="index"
+                v-for="item in employees"
+                :key="item.EmployeeId"
                 class="table__tr"
                 @dblclick="handleOnRowDblClick(item)"
               >
@@ -84,7 +84,8 @@
                 <td class="th__phone-number">{{ item.PhoneNumber }}</td>
                 <td class="th__landline-phone">{{ item.TelephoneNumber }}</td>
                 <td class="th__function">
-                  Sửa
+                  <span @click="changeEditClick(item)"> Sửa </span>
+
                   <span class="icon__edit" @click="handleShowDropMenu(item)">
                     <i class="icofont-caret-down"></i>
                   </span>
@@ -153,18 +154,24 @@
   />
 
   <EmployeeDetail
+    :selectPageSize="selectPageSize"
+    @setEdit="setEdit"
+    @setEmployee="setEmployee"
+    @loadDataDefault="loadDataDefault"
     @showDialogDetail="showDialogDetail"
     :employeeSelected="employeeSelected"
     :editMode="editMode"
+    :pageNumber="pageNumber"
     v-if="isShowDetail"
   ></EmployeeDetail>
-  <!-- <MISALoading /> -->
+  <MISALoading v-show="isShowLoading"></MISALoading>
 </template>
 
 <script>
+import axios from "axios";
 import MISAWarmingDelete from "../../components/base/MISAWarmingDelete";
 import EmployeeDetail from "../../views/employee/EmployeeDetail.vue";
-// import MISALoading from "../base/MISALoading.vue";
+import MISALoading from "../../components/base/MISALoading.vue";
 
 export default {
   name: "EmployeeList",
@@ -172,17 +179,20 @@ export default {
   components: {
     MISAWarmingDelete,
     EmployeeDetail,
-    // MISALoading,
+    MISALoading,
   },
 
   props: {},
 
   created() {
     this.loadingData();
+    //Thực hiện Loading lại trang khi lần đầu truy cập
+    this.loadDataDefault(this.selectPageSize, this.pageNumber);
   },
 
   methods: {
     /**
+     * @param {any} date
      * Author: SANG
      * createdBy: SANG
      * createdDate: 15/11/2022
@@ -190,6 +200,7 @@ export default {
     //Ấn double click hiển thị form Thông tin Nhân Viên
     handleOnRowDblClick(item) {
       try {
+        //form ở chế độ Chỉnh Sửa
         this.editMode = 1;
         //Hiển thị form chi tiết
         this.showDialogDetail();
@@ -199,6 +210,31 @@ export default {
       }
     },
 
+    /**
+     * @param {any} date
+     * Author: SANG
+     * createdBy: SANG
+     * createdDate: 15/11/2022
+     * */
+    //Ấn nút Sửa hiển thị form Chỉnh sủa Thông tin Nhân Viên
+    changeEditClick(item) {
+      try {
+        //form ở chế độ Chỉnh Sửa
+        this.editMode = 1;
+        //Hiển thị form chi tiết
+        this.showDialogDetail();
+        this.employeeSelected = item;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
+    /**
+     * @param {any} date
+     * Author: SANG
+     * createdBy: SANG
+     * createdDate: 15/11/2022
+     * */
     //Định dạng ngày tháng năm
     formatDate(dob) {
       try {
@@ -227,15 +263,16 @@ export default {
     },
 
     /**
+     * @param {any} date
      * Author: SANG
      * createdBy: SANG
      * createdDate: 16/11/2022
      * */
-    //Ấn nút Sửa thì hiện ra dropdown__menu
+    //Ấn nút Sửa thì hiện ra div: dropdown__menu
     handleShowDropMenu(employ) {
       try {
         //hiện dropdown__menu
-        this.isShowDropMenu = true;
+        this.isShowDropMenu = !this.isShowDropMenu;
         this.employeeSelected = employ;
         //lấy theo tọa độ trục y:
         this.topDrop = event.clientY + 10 + "px";
@@ -246,7 +283,13 @@ export default {
       }
     },
 
-    //Hiển thị Loading
+    /**
+     * @param {any} date
+     * Author: SANG
+     * createdBy: SANG
+     * createdDate: 16/11/2022
+     * */
+    //Hiển thị Loading Data
     loadingData() {
       try {
         //load dữ liệu:
@@ -265,10 +308,16 @@ export default {
       }
     },
 
+    /**
+     * @param {any} date
+     * Author: SANG
+     * createdBy: SANG
+     * createdDate: 16/11/2022
+     * */
     //Ấn nút Xóa thì hiện ra ToastWarning Message Delete
     handleShowMessDelete(isShow) {
       try {
-        // //ấn dropdown__menu
+        //ấn dropdown__menu
         this.isShowDropMenu = false;
 
         //hiển thị delete warning
@@ -279,6 +328,7 @@ export default {
     },
 
     /**
+     * @param {any} date
      * Author: SANG
      * createdBy: SANG
      * createdDate: 17/11/2022
@@ -293,10 +343,16 @@ export default {
       }
     },
 
+    /**
+     * @param {any} date
+     * Author: SANG
+     * createdBy: SANG
+     * createdDate: 17/11/2022
+     * */
     //Ấn nút Thêm Nhân Viên -> hiện Dialog Thông Tin Nhân Viên
     btnShowDialogDetail() {
       try {
-        //editMode = 0 (thêm mới) - editMode = 1 (chỉnh sửa)
+        //editMode = 0 (Thêm Mới) - editMode = 1 (Chỉnh Sửa)
         this.editMode = 0;
         this.showDialogDetail();
       } catch (error) {
@@ -304,6 +360,12 @@ export default {
       }
     },
 
+    /**
+     * @param {any} date
+     * Author: SANG
+     * createdBy: SANG
+     * createdDate: 17/11/2022
+     * */
     //Mở - Đóng Toast warning Delete
     showMessageDelete() {
       try {
@@ -312,6 +374,100 @@ export default {
       } catch (error) {
         console.log(error);
       }
+    },
+
+    /**
+     * @param {any} date
+     * Author: SANG
+     * createdBy: SANG
+     * createdDate: 24/11/2022
+     * */
+    // Hiển thị danh sách nhân viên theo số lượng bản ghi trên trang
+    loadDataDefault(selectPage, pageNumber) {
+      try {
+        //Hiển thị loading
+        this.isShowLoading = true;
+        var me = this;
+        axios
+          .get(
+            "https://amis.manhnv.net/api/v1/Employees/filter?pageSize=" +
+              selectPage +
+              "&pageNumber=" +
+              pageNumber
+          )
+          .then((res) => {
+            //Lấy giá trị
+            me.employees = res.data.Data;
+
+            //Lấy giá trị số trang
+            me.pageCount = res.data.TotalPage;
+
+            //Lấy ra số lượng bản ghi
+            me.totalRecord = res.data.TotalRecord;
+            //Dừng Loading
+            me.isShowLoading = false;
+          })
+          .catch((res) => {
+            console.log(res);
+          });
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
+    /**
+     * @param {any} date
+     * Author: SANG
+     * createdBy: SANG
+     * createdDate: 28/11/2022
+     * */
+    btnReLoading() {
+      this.loadDataDefault(this.totalRecord, this.pageNumber);
+    },
+
+    /**
+     * @param {any} date
+     * Author: SANG
+     * createdBy: SANG
+     * createdDate: 28/11/2022
+     * */
+    //set Giá trị cho số lượng bản ghi
+    // setDetailSelectPage(numberRecord) {
+    //   this.selectPageSize = numberRecord;
+    // },
+
+    /**
+     * @param {any} date
+     * Author: SANG
+     * createdBy: SANG
+     * createdDate: 28/11/2022
+     * */
+    //set Giá trị mảng được chọn
+    setEmployee(employeeSelected) {
+      this.employeeSelected = employeeSelected;
+    },
+    /**
+     * @param {any} date
+     * Author: SANG
+     * createdBy: SANG
+     * createdDate: 28/11/2022
+     * */
+    //set Giá trị của trạng thái editMode
+    setEdit(edit) {
+      this.editMode = edit;
+    },
+  },
+
+  watch: {
+    //Theo dõi sự thay đổi tùy chọn hiển thị số lượng bản ghi trên trang
+    /**
+     * @param {any} date
+     * Author: SANG
+     * createdBy: SANG
+     * createdDate: 28/11/2022
+     * */
+    selectPageSize: function () {
+      this.loadDataDefault(this.selectPageSize, this.pageNumber);
     },
   },
 
@@ -322,13 +478,14 @@ export default {
       isShowLoading: false,
       isShowToast: false,
       isShowMessDelete: false,
-      employeeSelected: [],
+      employeeSelected: {},
       employees: [],
       topDrop: "0",
       leftDrop: "0",
       editMode: 0,
-      selectPagesize: 10,
-      pageNumber: 0,
+      txtSearch: "",
+      selectPageSize: 10,
+      pageNumber: 1,
       pageCount: 0,
       totalRecord: 0,
     };

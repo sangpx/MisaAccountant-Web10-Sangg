@@ -35,7 +35,10 @@ export default {
 
   methods: {
     /**
-     * Author: Sang - 17/11/2022
+     * @param {any} date
+     * Author: SANG
+     * createdBy: SANG
+     * createdDate: 17/11/2022
      * */
     //Ấn nút "Không" thì Hủy xóa và Đóng Toast Message Delete warning
     closeMessDelete() {
@@ -46,7 +49,13 @@ export default {
       }
     },
 
-    //Call API gọi hàm ở lớp cha để xóa một Nhân Viên
+    /**
+     * @param {any} date
+     * Author: SANG
+     * createdBy: SANG
+     * createdDate: 17/11/2022
+     * */
+    //Call API để XÓA một Nhân Viên
     handleDeleteAndHideMess() {
       try {
         var me = this;
@@ -67,12 +76,6 @@ export default {
         console.log(error);
       }
     },
-  },
-
-  data() {
-    return {
-      employee: {},
-    };
   },
 };
 </script>

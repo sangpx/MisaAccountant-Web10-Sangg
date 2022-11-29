@@ -43,12 +43,11 @@
                   >Mã<span style="color: red">*</span></label
                 >
                 <input
-                  tabindex="2"
+                  :title="this.titleEmployeeCode"
                   :class="{
-                    errorMsg: isError.EmployeeCode,
-                    successMsg: isSuccess.EmployeeCode,
+                    errorMsg: errors.EmployeeCode,
+                    successMsg: !errors.EmployeeCode,
                   }"
-                  :title="titleEmployeeCode"
                   v-model="emp.EmployeeCode"
                   ref="txtEmployeeCodeRef"
                   id="txtEmployeeCode"
@@ -62,10 +61,10 @@
                 >
                 <input
                   :class="{
-                    errorMsg: isError.EmployeeName,
-                    successMsg: isSuccess.EmployeeName,
+                    errorMsg: errors.EmployeeName,
+                    successMsg: !errors.EmployeeName,
                   }"
-                  :title="titleEmployeeName"
+                  :title="this.titleEmployeeName"
                   v-model="emp.EmployeeName"
                   id="txtEmployeeName"
                   class="input input__name"
@@ -77,10 +76,23 @@
               <label class="details"
                 >Đơn vị<span style="color: red">*</span></label
               >
-              <select required class="select__input" name="select__input">
-                <option value="1">Phòng Nhân Sự</option>
-                <option value="2">Phòng Tuyển Sinh</option>
-                <option value="3">Phòng Sản Xuất</option>
+
+              <select
+                :class="{
+                  errorMsg: errors.departmentId,
+                  successMsg: !errors.departmentId,
+                }"
+                v-model="emp.departmentId"
+                :title="this.titledepartmentId"
+                class="select__input"
+                name="select__input"
+              >
+                <option value="142cb08f-7c31-21fa-8e90-67245e8b283e">
+                  Phòng Nhân Sự
+                </option>
+                <option value="17120d02-6ab5-3e43-18cb-66948daf6128">
+                  Phòng Tuyển Sinh
+                </option>
               </select>
             </div>
 
@@ -100,11 +112,13 @@
               </div>
               <div class="input__box item__gender">
                 <label class="details">Giới tính</label>
+
                 <div
                   style="
+                    margin-top: 6px;
                     display: flex;
                     align-items: center;
-                    justify-content: space-between;
+                    justify-content: space-around;
                   "
                 >
                   <input
@@ -169,16 +183,7 @@
               </div>
               <div class="input__box">
                 <label class="details">Email</label>
-                <input
-                  id="txtEmail"
-                  :class="{
-                    errorMsg: isError.Email,
-                    successMsg: isSuccess.Email,
-                  }"
-                  :title="titleEmail"
-                  type="text"
-                  class="input"
-                />
+                <input id="txtEmail" type="text" class="input" />
               </div>
             </div>
             <div class="user__detail-bottom">
@@ -207,7 +212,7 @@
         <div class="dialog-footer__right">
           <button class="btn btn-store">Cất</button>
           <button
-            @click="btnAddData"
+            @click="btnSaveAndAddData"
             id="btn-store__add"
             class="btn btn-store__add"
           >
@@ -218,13 +223,18 @@
     </div>
   </div>
   <MISAWarningValidate
-    v-if="showWarningValidate"
+    v-if="isShowMessageValidate"
     :MessageContent="MessageContent"
+    @CloseWarningValidate="showWarningValidate"
   />
 </template>
 
 <script>
+import Datepicker from "@vuepic/vue-datepicker";
+import "@vuepic/vue-datepicker/dist/main.css";
+import axios from "axios";
 import MISAWarningValidate from "../../components/base/MISAWarningValidate.vue";
+
 export default {
   name: "EmployeeDetail",
 
@@ -234,23 +244,22 @@ export default {
 
   data() {
     return {
+      success: {},
+      errors: {
+        EmployeeCode: "",
+        EmployeeName: "",
+        departmentId: "",
+      },
       isShowMessageValidate: false,
       employees: [],
       emp: {},
       employee: {},
-      Email: "",
       MessageContent: "",
-      IdentityNumber: "",
-      TelePhoneNumber: "",
-      checkChange: false,
-      isActiveError: false,
-      isCorrect: {},
-      isError: {},
-      isSuccess: {},
       titleEmployeeCode: "",
       titleEmployeeName: "",
-      titleEmail: "",
-      warningTitle: [],
+      titledepartmentId: "",
+      isShowToast: false,
+      detailSelectPage: 0,
     };
   },
 
@@ -261,10 +270,18 @@ export default {
     employeeSelected: {
       type: Object,
     },
+
+    pageNumber: {
+      type: Number,
+    },
+    selectPageSize: {
+      type: Number,
+    },
   },
 
   methods: {
     /***
+     * @param{any}date
      * Author: SANG
      * createdBy: SANG
      * createdDate: 17/11/2022
@@ -275,50 +292,173 @@ export default {
     },
 
     /***
+     * @param {any} date
      * Author: SANG
      * createdBy: SANG
      * createdDate: 21/11/2022
      * */
     //Ấn nút "Cất và Thêm" thực hiện thêm mới dữ liệu và gọi lại Form
-    btnAddData() {
+    btnSaveAndAddData() {
       try {
-        console.log(this.validateData());
+        if (this.validateData()) {
+          //Form ở chế độ Thêm Mới
+          if (this.editMode == 0) {
+            this.addNewEmployee();
+          }
+          //Form ở chế độ Chỉnh Sửa
+          else if (this.editMode == 1) {
+            this.editDataEmployee();
+            console.log("updated");
+          }
+        }
       } catch (error) {
         console.log(error);
       }
     },
 
-    //Hiển thị Toast Thông Báo khi nhập sai
-    showWarningValidate(isMessage) {
-      this.isShowMessageValidate = isMessage;
-    },
-
+    /***
+     * @param {any} date
+     * Author: SANG
+     * createdBy: SANG
+     * createdDate: 21/11/2022
+     * */
     //Validate Dữ liệu
     validateData() {
       try {
-        if (!this.employee.EmployeeCode) {
-          this.showWarningValidate(true);
-          this.MessageContent = "Mã Nhân Viên không được để trống.";
-          this.titleEmployeeCode = "Mã Nhân Viên không được để trống.";
-          this.isError["EmployeeCode"] = true;
+        if (!this.emp.EmployeeCode) {
+          this.showWarningValidate();
+          this.MessageContent = "Mã không được để trống.";
+          this.isShowBorderRed();
           return false;
         }
-        if (!this.employee.EmployeeName) {
-          this.showWarningValidate(true);
-          this.MessageContent = "Họ và Tên không được để trống.";
-          this.titleEmployeeName = "Tên không được để trống.";
-          this.isError["EmployeeName"] = true;
+        if (!this.emp.EmployeeName) {
+          this.showWarningValidate();
+          this.MessageContent = "Tên không được để trống.";
+          this.isShowBorderRed();
           return false;
         }
-        // if (!this.employee.Email) {
-        //   this.showWarningValidate(true);
-        //   this.MessageContent = "Email không đúng định dạng.";
-        //   this.titleEmail = "Email không đúng định dạng.";
-
-        //   return false;
-        // }
+        if (!this.emp.departmentId) {
+          this.showWarningValidate();
+          this.MessageContent = "Đơn vị không được để trống.";
+          this.isShowBorderRed();
+          return false;
+        }
 
         return true;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
+    /***
+     * @param {any} date
+     * Author: SANG
+     * createdBy: SANG
+     * createdDate: 21/11/2022
+     * */
+    //Hiển thị Border Đỏ khi không có dữ liệu
+    isShowBorderRed() {
+      this.errors["EmployeeCode"] =
+        this.errors["EmployeeName"] =
+        this.errors["departmentId"] =
+          true;
+    },
+
+    /***
+     * Author: SANG
+     * createdBy: SANG
+     * @param {any} date
+     * createdDate: 21/11/2022
+     * */
+    //Hiển thị Toast Thông Báo khi nhập sai
+    showWarningValidate() {
+      try {
+        this.isShowMessageValidate = !this.isShowMessageValidate;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
+    /***
+     * Author: SANG
+     * @param {any} date
+     * createdBy: SANG
+     * createdDate: 25/11/2022
+     * */
+    //Gọi api Thêm mới Dữ liệu Nhân Viên
+    addNewEmployee() {
+      try {
+        var me = this;
+        axios
+          .post("https://amis.manhnv.net/api/v1/Employees", this.emp)
+          .then((res) => {
+            me.$emit("setEmployee", me.emp);
+          })
+          .finally((respon) => {
+            //xóa object và khởi tạo lại mảng để thực hiện Thêm Mới
+            me.emp = {};
+            // Lấy Mã Nhân Viên mới
+            me.newEmployeeCode();
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    /***
+     * Author: SANG
+     * @param {any} date
+     * createdBy: SANG
+     * createdDate: 25/11/2022
+     * */
+    //Gọi api Chỉnh Sửa Dữ liệu Nhân Viên
+    editDataEmployee() {
+      try {
+        var me = this;
+        axios
+          .put(
+            `https://amis.manhnv.net/api/v1/Employees/${this.emp.EmployeeId}`,
+            this.emp
+          )
+          .then((res) => {
+            //xóa object và khởi tạo lại mảng để thực hiện Thêm Mới
+            me.emp = {};
+            me.$emit("setEmployee", me.emp);
+
+            //Khởi tạo lại chế độ editMode về Thêm Mới Nhân Viên
+            me.$emit("setEdit", 0);
+          })
+
+          .catch((error) => {
+            console.log(error);
+          });
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
+    /***
+     * Author: SANG
+     * @param {any} date
+     * createdBy: SANG
+     * createdDate: 26/11/2022
+     * */
+    //Lấy Mã Nhân Viên Mới
+    newEmployeeCode() {
+      try {
+        var me = this;
+        axios
+          .get("https://amis.manhnv.net/api/v1/Employees/NewEmployeeCode")
+          .then((res) => {
+            const newEmployeeCode = res.data;
+            me.employeeSelected.EmployeeCode = newEmployeeCode;
+            me.emp = me.employeeSelected;
+          })
+          .catch((error) => {
+            console.log(error);
+          });
       } catch (error) {
         console.log(error);
       }
@@ -330,19 +470,33 @@ export default {
       this.emp = this.employeeSelected;
     }
 
-    //gọi API thêm mới Nhân Viên
+    this.newEmployeeCode();
   },
-
-  beforeMount() {},
 
   mounted() {
     //focus vào ô nhập Mã Nhân Viên
     this.$refs.txtEmployeeCodeRef.focus();
   },
 
-  beforeUpdate() {},
-
-  updated() {},
+  /***
+   * Author: SANG
+   * @param {any} date
+   * createdBy: SANG
+   * createdDate: 21/11/2022
+   * */
+  //Quá trình beforeUpdate được gọi ngay sau khi dữ liệu
+  //trên component bị thay đổi và trước khi component re-render
+  beforeUpdate() {
+    if (this.emp.EmployeeCode) {
+      this.errors["EmployeeCode"] = false;
+    }
+    if (this.emp.EmployeeName) {
+      this.errors["EmployeeName"] = false;
+    }
+    if (this.emp.departmentId) {
+      this.errors["departmentId"] = false;
+    }
+  },
 };
 </script>
 

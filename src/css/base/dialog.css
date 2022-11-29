@@ -1,6 +1,6 @@
 .dialog {
      position: fixed;
-     background: #000000af;
+     background: #313131b5;
      top: 0;
      left: 0;
      right: 0;
@@ -142,7 +142,7 @@ input[type=radio]{
      height: 36px;
      display: inline-block;
      padding: 0 16px;
-     margin: 10px 0;
+     margin: 6px 0;
      cursor: pointer;
      border-radius: 4px;
      border: 1px solid #dedede;   
@@ -166,7 +166,10 @@ input[type=radio]{
      font-size: 13px;
 }
 
-
+.input-focus {
+     border: 1px solid #2ca01c;
+ }
+ 
 
 
 .dialog-container__bottom {
@@ -264,6 +267,6 @@ input[type=radio]{
      border: 1px solid red !important;
 }
 
-.successtMsg {
+.successMsg:focus {
      border: 1px solid #2ca01c !important;
 }

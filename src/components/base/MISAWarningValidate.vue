@@ -1,6 +1,6 @@
 <template>
-  <!-- toast-cảnh báo: "Bạn có thực sự muốn xóa?" -->
   <div class="toast-message">
+    <!-- toast-cảnh báo: "Bạn có thực sự muốn xóa?" -->
     <div class="toast__warning-duplicate">
       <div class="toast__warning-content">
         <div class="toast__icon">
@@ -9,15 +9,15 @@
         <div class="toast__text">{{ MessageContent }}</div>
       </div>
       <div class="toast__warning-btn">
-        <button class="btn toast__warning-no">Đóng</button>
+        <button @click="btnCloseWarningValidate" class="btn toast__warning-no">
+          Đóng
+        </button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import axios from "axios";
-
 export default {
   name: "MISAWaringValidate",
 
@@ -25,10 +25,11 @@ export default {
     return {};
   },
 
+  created() {},
+
   props: {
     MessageContent: {
       type: String,
-      required: true,
     },
   },
 
@@ -38,6 +39,13 @@ export default {
      * createdBy: SANG
      * createdDate: 21/11/2022
      * */
+    btnCloseWarningValidate() {
+      try {
+        this.$emit("CloseWarningValidate");
+      } catch (error) {
+        console.log(error);
+      }
+    },
   },
 };
 </script>
@@ -53,7 +61,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1;
+  z-index: 111111;
 }
 
 .toast__warning-duplicate {
@@ -78,6 +86,11 @@ export default {
   color: #f14646;
 }
 
+.icofont-exclamation-circle {
+  font-size: 45px;
+  color: #ff7777;
+}
+
 .toast__text {
   font-size: 14px;
 }
@@ -92,16 +105,13 @@ export default {
 }
 
 .toast__warning-no {
-  background-color: #ffffff;
-  color: #000;
-  border: 1px solid #636363;
+  background-color: #2ca01c;
+  color: #ffffff;
+  border: 1px solid #999999;
+  font-weight: 500;
 }
 
 .toast__warning-no:hover {
-  background-color: #ccc;
-}
-
-.toast__warning-yes {
-  min-width: 52px;
+  background-color: #39ac66;
 }
 </style>
