@@ -31,6 +31,14 @@ export default {
     employeeSelected: {
       type: Object,
     },
+
+    selectPageSize: {
+      type: Number,
+    },
+
+    pageNumber: {
+      type: Number,
+    },
   },
 
   methods: {
@@ -39,8 +47,8 @@ export default {
      * Author: SANG
      * createdBy: SANG
      * createdDate: 17/11/2022
+     * Ấn nút "Không" thì Hủy xóa và Đóng Toast Message Delete warning
      * */
-    //Ấn nút "Không" thì Hủy xóa và Đóng Toast Message Delete warning
     closeMessDelete() {
       try {
         this.$emit("showMessageDelete");
@@ -54,23 +62,22 @@ export default {
      * Author: SANG
      * createdBy: SANG
      * createdDate: 17/11/2022
+     * Call API để XÓA một Nhân Viên
      * */
-    //Call API để XÓA một Nhân Viên
     handleDeleteAndHideMess() {
       try {
         var me = this;
         axios
           .delete(
-            "https://amis.manhnv.net/api/v1/Employees/" +
-              me.employeeSelected.EmployeeId
+            "http://localhost:5077/api/v1/Employees?id=" +
+              me.employeeSelected.EmployeeID
           )
-          // eslint-disable-next-line no-unused-vars
           .then((res) => {
-            //đóng form warning delete
+            //Đóng Form Warning delete
             me.$emit("showMessageDelete");
 
             //loading lại dữ liệu
-            me.$emit("loadingData");
+            me.$emit("loadDataDefault", me.pageNumber, me.selectPageSize);
           });
       } catch (error) {
         console.log(error);

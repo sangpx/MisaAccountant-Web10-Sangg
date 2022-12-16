@@ -10,12 +10,12 @@
 
           <div class="dialog-header__btn">
             <input type="checkbox" name="" class="dialog-header__checkbox" />
-            <div>Là Khách Hàng</div>
+            <div>{{ this.$t("ISCUSTOMER") }}</div>
           </div>
 
           <div class="dialog-header__btn">
             <input type="checkbox" name="" class="dialog-header__checkbox" />
-            <div>Là Nhà Cung Cấp</div>
+            <div>{{ this.$t("ISCUSTOMER") }}</div>
           </div>
         </div>
 
@@ -40,10 +40,11 @@
               <div tabindex="1"></div>
               <div class="input__box item__id">
                 <label class="details"
-                  >Mã<span style="color: red">*</span></label
+                  >{{ this.$t("EMPLOYEECODE")
+                  }}<span style="color: red">*</span></label
                 >
                 <input
-                  :title="this.titleEmployeeCode"
+                  :title="titleEmployeeCode"
                   :class="{
                     errorMsg: errors.EmployeeCode,
                     successMsg: !errors.EmployeeCode,
@@ -57,14 +58,15 @@
 
               <div class="input__box item__name">
                 <label class="details"
-                  >Tên<span style="color: red">*</span></label
+                  >{{ this.$t("EMPLOYEENAME")
+                  }}<span style="color: red">*</span></label
                 >
                 <input
                   :class="{
                     errorMsg: errors.EmployeeName,
                     successMsg: !errors.EmployeeName,
                   }"
-                  :title="this.titleEmployeeName"
+                  :title="titleEmployeeName"
                   v-model="emp.EmployeeName"
                   id="txtEmployeeName"
                   class="input input__name"
@@ -74,49 +76,65 @@
 
             <div class="input__box item__unit-work">
               <label class="details"
-                >Đơn vị<span style="color: red">*</span></label
+                >{{ this.$t("WORKINGUNITNAME")
+                }}<span style="color: red">*</span></label
               >
 
               <select
                 :class="{
-                  errorMsg: errors.departmentId,
-                  successMsg: !errors.departmentId,
+                  errorMsg: errors.WorkingUnitID,
+                  successMsg: !errors.WorkingUnitID,
                 }"
-                v-model="emp.departmentId"
-                :title="this.titledepartmentId"
+                v-model="emp.WorkingUnitID"
+                :title="titleWorkingUnitID"
                 class="select__input"
                 name="select__input"
               >
-                <option value="142cb08f-7c31-21fa-8e90-67245e8b283e">
-                  Phòng Nhân Sự
+                <option value="45ac3d26-18f2-18a9-3031-644313fbb055">
+                  Phòng Tuyển dụng
                 </option>
-                <option value="17120d02-6ab5-3e43-18cb-66948daf6128">
-                  Phòng Tuyển Sinh
+                <option value="3fa85f64-5717-4562-b3fc-2c963f66afa5">
+                  Phòng Đào Tạo 3
+                </option>
+
+                <option value="3fa85f64-5717-4562-b3fc-2c963f66afa3">
+                  Phòng Vận Hành
+                </option>
+                <option value="3f8e6896-4c7d-15f5-a018-75d8bd200d7c">
+                  Phòng Công Nghệ Thông Tin
                 </option>
               </select>
             </div>
 
             <div class="input__box item__career-title">
-              <label class="details">Chức Danh</label>
-              <input type="text" class="input input-career___title" />
+              <label class="details">{{ this.$t("CAREERTITLE") }}</label>
+              <input
+                v-model="emp.CareerTitle"
+                class="input input-career___title"
+                type="text"
+              />
             </div>
           </div>
 
           <div class="dialog-container__top--right">
             <div class="top__left-content">
               <div class="input__box item__id item__bith">
-                <label class="details">Ngày sinh</label>
+                <label class="details"> {{ this.$t("DATEOFBIRTH") }} </label>
                 <div>
-                  <input type="date" class="input input__id input__birth" />
+                  <input
+                    v-model="emp.DateOfBirth"
+                    class="input input__id input__birth"
+                    type="date"
+                  />
                 </div>
               </div>
               <div class="input__box item__gender">
-                <label class="details">Giới tính</label>
+                <label class="details"> {{ this.$t("GENDER") }} </label>
 
                 <div
                   style="
-                    margin-top: 6px;
                     display: flex;
+                    margin-top: 6px;
                     align-items: center;
                     justify-content: space-around;
                   "
@@ -127,12 +145,14 @@
                     checked
                     id="male"
                     class="male"
+                    v-model="emp.Gender"
                   />
                   <label class="name__gender" for="male">Nam</label>
                   <input
                     type="radio"
                     name="gender"
                     id="female"
+                    v-model="emp.Gender"
                     class="female"
                   />
                   <label class="name__gender" for="female">Nữ</label>
@@ -140,6 +160,7 @@
                     type="radio"
                     name="gender"
                     id="difference"
+                    v-model="emp.Gender"
                     class="difference"
                   />
                   <label class="name__gender" for="difference">Khác</label>
@@ -149,55 +170,84 @@
 
             <div class="top__left-content">
               <div class="input__box item__identity-number">
-                <label class="details">Số CMND</label>
-                <input type="text" class="input input__Identity-Number" />
+                <label class="details">{{ this.$t("IDENTITYNUMBER") }} </label>
+
+                <input
+                  v-model="emp.IdentityNumber"
+                  type="text"
+                  class="input input__Identity-Number"
+                />
               </div>
               <div class="input__box item__issue-date">
-                <label class="details">Ngày cấp</label>
-                <input type="date" class="input input__IssureDate" />
+                <label class="details">{{ this.$t("IDENTITYDATE") }}</label>
+                <input
+                  v-model="emp.IdentityIssureDate"
+                  type="date"
+                  class="input input__IssureDate"
+                />
               </div>
             </div>
 
             <div class="input__box item__issue-place">
-              <label class="details">Nơi Cấp</label>
-              <input type="text" class="input input__IssurePlace" />
+              <label class="details">{{ this.$t("IDENTITYPLACE") }}</label>
+              <input
+                v-model="emp.IdentityIssurePlace"
+                type="text"
+                class="input input__IssurePlace"
+              />
             </div>
           </div>
         </div>
 
         <div class="dialog-container__bottom">
           <div class="input__box">
-            <label class="details">Địa Chỉ</label>
-            <input ty0pe="text" class="input input___address" />
+            <label class="details">{{ this.$t("ADDRESS") }}</label>
+            <input
+              v-model="emp.Address"
+              ty0pe="text"
+              class="input input___address"
+            />
           </div>
 
           <div class="user__detail">
             <div class="user__detail-top">
               <div class="input__box">
-                <label class="details tool-tip-smartPhone">ĐT Di động</label>
-                <input id="txtPhone" type=" text" class="input" />
+                <label class="details tool-tip-smartPhone">{{
+                  this.$t("PHONENUMBER")
+                }}</label>
+                <input
+                  v-model="emp.PhoneNumber"
+                  id="txtPhone"
+                  type=" text"
+                  class="input"
+                />
               </div>
               <div class="input__box tool-tip-dtcd">
-                <label class="details">ĐT Cố định</label>
-                <input type="text" class="input" />
+                <label class="details">{{ this.$t("LANDLINENUMBER") }}</label>
+                <input v-model="emp.LandlineNumber" type="text" class="input" />
               </div>
               <div class="input__box">
-                <label class="details">Email</label>
-                <input id="txtEmail" type="text" class="input" />
+                <label class="details">{{ this.$t("EMAIL") }}</label>
+                <input
+                  v-model="emp.Email"
+                  id="txtEmail"
+                  type="text"
+                  class="input"
+                />
               </div>
             </div>
             <div class="user__detail-bottom">
               <div class="input__box">
-                <label class="details">Tài Khoản Ngân Hàng</label>
-                <input type="text" class="input" />
+                <label class="details">{{ this.$t("ACCOUNTNUMBER") }}</label>
+                <input v-model="emp.AccountBank" type="text" class="input" />
               </div>
               <div class="input__box">
-                <label class="details">Tên Ngân Hàng</label>
-                <input type="text" class="input" />
+                <label class="details">{{ this.$t("BANKNAME") }}</label>
+                <input v-model="emp.NameBank" type="text" class="input" />
               </div>
               <div class="input__box">
-                <label class="details">Chi Nhánh</label>
-                <input type="text" class="input" />
+                <label class="details">{{ this.$t("BRANCHBANK") }}</label>
+                <input v-model="emp.BranchBank" type="text" class="input" />
               </div>
             </div>
           </div>
@@ -210,7 +260,7 @@
           <button class="btn btn-cancel">Hủy</button>
         </div>
         <div class="dialog-footer__right">
-          <button class="btn btn-store">Cất</button>
+          <button class="btn btn-store" @click="btnAddData">Cất</button>
           <button
             @click="btnSaveAndAddData"
             id="btn-store__add"
@@ -234,6 +284,7 @@ import Datepicker from "@vuepic/vue-datepicker";
 import "@vuepic/vue-datepicker/dist/main.css";
 import axios from "axios";
 import MISAWarningValidate from "../../components/base/MISAWarningValidate.vue";
+import enums from "../../js/enums";
 
 export default {
   name: "EmployeeDetail",
@@ -244,11 +295,12 @@ export default {
 
   data() {
     return {
+      date: null,
       success: {},
       errors: {
         EmployeeCode: "",
         EmployeeName: "",
-        departmentId: "",
+        WorkingUnitID: "",
       },
       isShowMessageValidate: false,
       employees: [],
@@ -257,9 +309,10 @@ export default {
       MessageContent: "",
       titleEmployeeCode: "",
       titleEmployeeName: "",
-      titledepartmentId: "",
+      titleWorkingUnitID: "",
       isShowToast: false,
       detailSelectPage: 0,
+      enums: enums,
     };
   },
 
@@ -267,6 +320,7 @@ export default {
     editMode: {
       type: Number,
     },
+
     employeeSelected: {
       type: Object,
     },
@@ -274,6 +328,7 @@ export default {
     pageNumber: {
       type: Number,
     },
+
     selectPageSize: {
       type: Number,
     },
@@ -288,27 +343,61 @@ export default {
      * */
     //Ấn dấu X thực hiện đóng Dialog Detail
     closeDialogDetail() {
-      this.$emit("showDialogDetail");
+      try {
+        this.$emit("showDialogDetail");
+      } catch (error) {
+        console.log(error);
+      }
     },
 
     /***
      * @param {any} date
      * Author: SANG
      * createdBy: SANG
-     * createdDate: 21/11/2022
+     * createdDate: 08/12/2022
+     * Thực hiện Lưu lại dữ liệu và đóng Form
      * */
-    //Ấn nút "Cất và Thêm" thực hiện thêm mới dữ liệu và gọi lại Form
-    btnSaveAndAddData() {
+    btnAddData() {
       try {
         if (this.validateData()) {
           //Form ở chế độ Thêm Mới
-          if (this.editMode == 0) {
-            this.addNewEmployee();
+          var me = this;
+          if (me.editMode == me.enums.formMode.addMode) {
+            axios
+              .post("http://localhost:5077/api/v1/Employees", me.emp)
+              .then((res) => {
+                //tăng bản ghi hiện tại lên 1
+                me.detailSelectPage += 1;
+
+                me.$emit("setDetailSelectPage", me.detailSelectPage);
+
+                me.$emit("loadDataDefault", me.pageNumber, me.detailSelectPage);
+
+                //đóng Form
+                me.$emit("showDialogDetail");
+              })
+
+              .catch((error) => {
+                console.log(error);
+              });
           }
+
           //Form ở chế độ Chỉnh Sửa
-          else if (this.editMode == 1) {
-            this.editDataEmployee();
-            console.log("updated");
+          else if (me.editMode == me.enums.formMode.editMode) {
+            axios
+              .put(
+                `http://localhost:5077/api/v1/Employees/${me.emp.EmployeeId}`,
+                this.emp
+              )
+              .then((res) => {
+                me.$emit("loadDataDefault", me.pageNumber, me.selectPageSize);
+                //đóng Form
+                me.$emit("showDialogDetail");
+              })
+
+              .catch((error) => {
+                console.log(error);
+              });
           }
         }
       } catch (error) {
@@ -321,25 +410,96 @@ export default {
      * Author: SANG
      * createdBy: SANG
      * createdDate: 21/11/2022
+     * Thực hiện lưu lại dữ liệu hiện tại và Reset Form, Cho phép người dùng có thể
+     * Thêm mới Khách hàng ngay lập tức mà không cần thêm thao tác nhấn Button Thêm mới.
      * */
-    //Validate Dữ liệu
+    btnSaveAndAddData() {
+      try {
+        if (this.validateData()) {
+          //Form ở chế độ Thêm Mới
+          var me = this;
+          if (me.editMode == me.enums.formMode.addMode) {
+            axios
+              .post("http://localhost:5077/api/v1/Employees", me.emp)
+              .then((res) => {
+                //tăng bản ghi hiện tại lên 1
+                me.detailSelectPage += 1;
+
+                me.$emit("setDetailSelectPage", me.detailSelectPage);
+
+                me.$emit("loadDataDefault", me.pageNumber, me.detailSelectPage);
+
+                me.$emit("setEmployee", me.emp);
+              })
+              .finally((respon) => {
+                //xóa object và khởi tạo lại mảng để thực hiện Thêm Mới
+                me.emp = {};
+
+                //Hàm Lấy Mã Nhân Viên mới
+                me.newEmployeeCode();
+              })
+              .catch((error) => {
+                console.log(error);
+              });
+          }
+
+          //Form ở chế độ Chỉnh Sửa
+          else if (me.editMode == me.enums.formMode.editMode) {
+            axios
+              .put(`http://localhost:5077/api/v1/Employees`, me.emp)
+              .then((res) => {
+                me.$emit("loadDataDefault", me.pageNumber, me.detailSelectPage);
+
+                //xóa object và khởi tạo lại mảng để thực hiện Thêm Mới
+                me.emp = {};
+
+                me.$emit("setEmployee", me.emp);
+
+                //Khởi tạo lại chế độ editMode về Thêm Mới Nhân Viên
+                me.$emit("setEdit", me.enums.formMode.addMode);
+              })
+              .finally((res) => {
+                // gọi hàm lấy mã mới
+                me.newEmployeeCode();
+              })
+
+              .catch((error) => {
+                console.log(error);
+              });
+          }
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
+    /***
+     * @param {any} date
+     * Author: SANG
+     * createdBy: SANG
+     * createdDate: 21/11/2022
+     * Validate Dữ liệu
+     * */
     validateData() {
       try {
         if (!this.emp.EmployeeCode) {
           this.showWarningValidate();
-          this.MessageContent = "Mã không được để trống.";
+          this.MessageContent = this.$t("EMPLOYEECODEEMPTY");
+          this.titleEmployeeCode = this.$t("EMPLOYEECODEEMPTY");
           this.isShowBorderRed();
           return false;
         }
         if (!this.emp.EmployeeName) {
           this.showWarningValidate();
-          this.MessageContent = "Tên không được để trống.";
+          this.MessageContent = this.$t("EMPLOYEENAMEEMPTY");
+          this.titleEmployeeName = this.$t("EMPLOYEENAMEEMPTY");
           this.isShowBorderRed();
           return false;
         }
-        if (!this.emp.departmentId) {
+        if (!this.emp.WorkingUnitID) {
           this.showWarningValidate();
-          this.MessageContent = "Đơn vị không được để trống.";
+          this.MessageContent = this.$t("WORKINGUNITNAMEEMPTY");
+          this.titleWorkingUnitID = this.$t("WORKINGUNITNAMEEMPTY");
           this.isShowBorderRed();
           return false;
         }
@@ -358,10 +518,14 @@ export default {
      * */
     //Hiển thị Border Đỏ khi không có dữ liệu
     isShowBorderRed() {
-      this.errors["EmployeeCode"] =
-        this.errors["EmployeeName"] =
-        this.errors["departmentId"] =
-          true;
+      try {
+        this.errors["EmployeeCode"] =
+          this.errors["EmployeeName"] =
+          this.errors["WorkingUnitID"] =
+            true;
+      } catch (error) {
+        console.log(error);
+      }
     },
 
     /***
@@ -383,76 +547,16 @@ export default {
      * Author: SANG
      * @param {any} date
      * createdBy: SANG
-     * createdDate: 25/11/2022
-     * */
-    //Gọi api Thêm mới Dữ liệu Nhân Viên
-    addNewEmployee() {
-      try {
-        var me = this;
-        axios
-          .post("https://amis.manhnv.net/api/v1/Employees", this.emp)
-          .then((res) => {
-            me.$emit("setEmployee", me.emp);
-          })
-          .finally((respon) => {
-            //xóa object và khởi tạo lại mảng để thực hiện Thêm Mới
-            me.emp = {};
-            // Lấy Mã Nhân Viên mới
-            me.newEmployeeCode();
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      } catch (error) {
-        console.log(error);
-      }
-    },
-    /***
-     * Author: SANG
-     * @param {any} date
-     * createdBy: SANG
-     * createdDate: 25/11/2022
-     * */
-    //Gọi api Chỉnh Sửa Dữ liệu Nhân Viên
-    editDataEmployee() {
-      try {
-        var me = this;
-        axios
-          .put(
-            `https://amis.manhnv.net/api/v1/Employees/${this.emp.EmployeeId}`,
-            this.emp
-          )
-          .then((res) => {
-            //xóa object và khởi tạo lại mảng để thực hiện Thêm Mới
-            me.emp = {};
-            me.$emit("setEmployee", me.emp);
-
-            //Khởi tạo lại chế độ editMode về Thêm Mới Nhân Viên
-            me.$emit("setEdit", 0);
-          })
-
-          .catch((error) => {
-            console.log(error);
-          });
-      } catch (error) {
-        console.log(error);
-      }
-    },
-
-    /***
-     * Author: SANG
-     * @param {any} date
-     * createdBy: SANG
      * createdDate: 26/11/2022
+     * Lấy Mã Nhân Viên Mới
      * */
-    //Lấy Mã Nhân Viên Mới
     newEmployeeCode() {
       try {
         var me = this;
         axios
-          .get("https://amis.manhnv.net/api/v1/Employees/NewEmployeeCode")
+          .get("http://localhost:5077/api/v1/Employees/NewEmployeeCode")
           .then((res) => {
-            const newEmployeeCode = res.data;
+            let newEmployeeCode = res.data;
             me.employeeSelected.EmployeeCode = newEmployeeCode;
             me.emp = me.employeeSelected;
           })
@@ -463,18 +567,61 @@ export default {
         console.log(error);
       }
     },
+
+    /**
+     * @param {any} date
+     * Author: SANG
+     * createdBy: SANG
+     * createdDate: 15/11/2022
+     * */
+    //Định dạng ngày tháng năm
+    formatDate(dob) {
+      try {
+        let dateConvert = new Date(dob);
+        if (
+          dob &&
+          dateConvert instanceof Date &&
+          !isNaN(dateConvert.valueOf())
+        ) {
+          //Lấy ngày
+          let date = dateConvert.getDate();
+          date = date < 10 ? `0${date}` : date;
+          //lấy tháng
+          var month = dateConvert.getMonth() + 1;
+          month = month < 10 ? `0${month}` : month;
+          //lấy năm
+          var year = dateConvert.getFullYear();
+          dob = `${year}-${month}-${date}`;
+          return dob;
+        } else {
+          return "";
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    },
   },
 
   created() {
-    if (this.editMode == 1) {
+    //Gán Giá Trị lấy từ props
+    this.detailSelectPage = this.selectPageSize;
+
+    if (this.editMode == this.enums.formMode.addMode) {
+      //lấy mã nhân viên mới
+      this.newEmployeeCode();
+    } else if (this.editMode == this.enums.formMode.editMode) {
       this.emp = this.employeeSelected;
     }
 
-    this.newEmployeeCode();
+    //Format Date
+    this.emp.DateOfBirth = this.formatDate(this.emp.DateOfBirth);
+    this.emp.IdentityIssurePlace = this.formatDate(
+      this.emp.IdentityIssurePlace
+    );
   },
 
   mounted() {
-    //focus vào ô nhập Mã Nhân Viên
+    //Focus vào ô nhập Mã Nhân Viên
     this.$refs.txtEmployeeCodeRef.focus();
   },
 
@@ -493,8 +640,8 @@ export default {
     if (this.emp.EmployeeName) {
       this.errors["EmployeeName"] = false;
     }
-    if (this.emp.departmentId) {
-      this.errors["departmentId"] = false;
+    if (this.emp.WorkingUnitID) {
+      this.errors["WorkingUnitID"] = false;
     }
   },
 };

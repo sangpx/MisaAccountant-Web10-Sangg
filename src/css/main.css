@@ -9,6 +9,7 @@
 @import url(../css/base/reset.css);
 @import url(../css/base/table.css);
 @import url(../css/base/loading.css);
+@import url(../css/base/pagniate.css);
 @import url(../../src/assets/icofont/icofont.css);
 
 body {

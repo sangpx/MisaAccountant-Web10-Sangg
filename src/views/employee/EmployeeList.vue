@@ -65,26 +65,26 @@
                 </td>
                 <td class="th__id">{{ item.EmployeeCode }}</td>
                 <td class="th__name">{{ item.EmployeeName }}</td>
-                <td class="th__gender">{{ item.GenderName }}</td>
+                <td class="th__gender">{{ getGender(item.Gender) }}</td>
                 <td class="th__dateBirth">
                   {{ formatDate(item.DateOfBirth) }}
                 </td>
                 <td class="th__identity-number">{{ item.IdentityNumber }}</td>
                 <td class="th__issure-date">
-                  {{ formatDate(item.IdentityDate) }}
+                  {{ formatDate(item.IdentityIssureDate) }}
                 </td>
-                <td class="th__issure-place">{{ item.IdentityPlace }}</td>
-                <td class="th__career-title">{{ item.PositionName }}</td>
-                <td class="th__name-unit--work">{{ item.DepartmentName }}</td>
-                <td class="th__account-number">{{ item.BankAccountNumber }}</td>
+                <td class="th__issure-place">{{ item.IdentityIssurePlace }}</td>
+                <td class="th__career-title">{{ item.CareerTitle }}</td>
+                <td class="th__name-unit--work">{{ item.WorkingUnitName }}</td>
+                <td class="th__account-number">{{ item.AccountBank }}</td>
                 <td class="th__address">{{ item.Addresss }}</td>
                 <td class="th__email">{{ item.Email }}</td>
-                <td class="th__name-bank">{{ item.BankName }}</td>
-                <td class="th__branch-bank">{{ item.BankBranchName }}</td>
+                <td class="th__name-bank">{{ item.NameBank }}</td>
+                <td class="th__branch-bank">{{ item.BranchBank }}</td>
                 <td class="th__phone-number">{{ item.PhoneNumber }}</td>
-                <td class="th__landline-phone">{{ item.TelephoneNumber }}</td>
+                <td class="th__landline-phone">{{ item.LandlineNumber }}</td>
                 <td class="th__function">
-                  <span @click="changeEditClick(item)"> Sửa </span>
+                  <span @click="handleOnRowDblClick(item)"> Sửa </span>
 
                   <span class="icon__edit" @click="handleShowDropMenu(item)">
                     <i class="icofont-caret-down"></i>
@@ -106,9 +106,13 @@
 
         <div class="paging__right">
           <div class="paging__right-select">
-            <select class="select__paging" name="select__paging">
-              <option value="2">20 bản ghi trên một trang</option>
+            <select
+              class="select__paging"
+              v-model="selectPageSize"
+              name="select__paging"
+            >
               <option value="1">10 bản ghi trên một trang</option>
+              <option value="2">20 bản ghi trên một trang</option>
               <option value="3">30 bản ghi trên một trang</option>
               <option value="4">50 bản ghi trên một trang</option>
               <option value="5">100 bản ghi trên một trang</option>
@@ -117,15 +121,12 @@
 
           <div class="paging__right-page">
             <div class="right-page__content">
-              <div class="page__prev">Trước</div>
-              <div class="page__number">
-                <div class="number number__one">1</div>
-                <div class="number number__two">2</div>
-                <div class="number number__three">3</div>
-                <div class="number number__ellipsis">...</div>
-                <div class="number number__nine">9</div>
-              </div>
-              <div class="page__next">Sau</div>
+              <MISAPaging
+                @stateSearch="stateSearch"
+                :isCheckSearch="isCheckSearch"
+                :selectPageSize="selectPageSize"
+                :recordToTal="recordToTal"
+              />
             </div>
           </div>
         </div>
@@ -148,23 +149,28 @@
 
   <MISAWarmingDelete
     @showMessageDelete="showMessageDelete"
+    @loadDataDefault="loadDataDefault"
     :employeeSelected="employeeSelected"
-    @loadingData="loadingData"
+    :selectPageSize="selectPageSize"
+    :pageNumber="pageNumber"
     v-if="isShowMessDelete"
   />
 
   <EmployeeDetail
-    :selectPageSize="selectPageSize"
-    @setEdit="setEdit"
+    @setDetailSelectPage="setDetailSelectPage"
     @setEmployee="setEmployee"
     @loadDataDefault="loadDataDefault"
+    @setEdit="setEdit"
     @showDialogDetail="showDialogDetail"
+    :showDialogDetail="showDialogDetail"
     :employeeSelected="employeeSelected"
     :editMode="editMode"
+    :selectPageSize="selectPageSize"
     :pageNumber="pageNumber"
     v-if="isShowDetail"
   ></EmployeeDetail>
-  <MISALoading v-show="isShowLoading"></MISALoading>
+
+  <MISALoading v-if="isShowLoading"></MISALoading>
 </template>
 
 <script>
@@ -172,6 +178,8 @@ import axios from "axios";
 import MISAWarmingDelete from "../../components/base/MISAWarmingDelete";
 import EmployeeDetail from "../../views/employee/EmployeeDetail.vue";
 import MISALoading from "../../components/base/MISALoading.vue";
+import MISAPaging from "../../components/base/MISAPaging.vue";
+import enums from "../../js/enums";
 
 export default {
   name: "EmployeeList",
@@ -180,14 +188,14 @@ export default {
     MISAWarmingDelete,
     EmployeeDetail,
     MISALoading,
+    MISAPaging,
   },
 
   props: {},
 
   created() {
-    this.loadingData();
     //Thực hiện Loading lại trang khi lần đầu truy cập
-    this.loadDataDefault(this.selectPageSize, this.pageNumber);
+    this.loadDataDefault(this.pageNumber, this.selectPageSize);
   },
 
   methods: {
@@ -196,33 +204,14 @@ export default {
      * Author: SANG
      * createdBy: SANG
      * createdDate: 15/11/2022
+     * Ấn double click hiển thị form Thông tin Nhân Viên
      * */
-    //Ấn double click hiển thị form Thông tin Nhân Viên
     handleOnRowDblClick(item) {
       try {
         //form ở chế độ Chỉnh Sửa
-        this.editMode = 1;
+        this.editMode = this.enums.formMode.editMode;
         //Hiển thị form chi tiết
-        this.showDialogDetail();
-        this.employeeSelected = item;
-      } catch (error) {
-        console.log(error);
-      }
-    },
-
-    /**
-     * @param {any} date
-     * Author: SANG
-     * createdBy: SANG
-     * createdDate: 15/11/2022
-     * */
-    //Ấn nút Sửa hiển thị form Chỉnh sủa Thông tin Nhân Viên
-    changeEditClick(item) {
-      try {
-        //form ở chế độ Chỉnh Sửa
-        this.editMode = 1;
-        //Hiển thị form chi tiết
-        this.showDialogDetail();
+        this.showDialogDetail(item);
         this.employeeSelected = item;
       } catch (error) {
         console.log(error);
@@ -295,7 +284,7 @@ export default {
         //load dữ liệu:
         //hiển thị loading
         this.isShowLoading = true;
-        const fetchAPI = "https://amis.manhnv.net/api/v1/employees";
+        const fetchAPI = "http://localhost:5077/api/v1/Employees";
         fetch(fetchAPI)
           .then((res) => res.json())
           .then((res) => {
@@ -332,8 +321,8 @@ export default {
      * Author: SANG
      * createdBy: SANG
      * createdDate: 17/11/2022
+     * Mở - Đóng form Chi Tiết Nhân Viên
      * */
-    //Mở - Đóng form Chi Tiết Nhân Viên
     showDialogDetail() {
       try {
         // bằng false -> true - bằng true -> false
@@ -348,12 +337,13 @@ export default {
      * Author: SANG
      * createdBy: SANG
      * createdDate: 17/11/2022
+     * Ấn nút Thêm Nhân Viên -> hiện Dialog Thông Tin Nhân Viên
      * */
-    //Ấn nút Thêm Nhân Viên -> hiện Dialog Thông Tin Nhân Viên
+
     btnShowDialogDetail() {
       try {
         //editMode = 0 (Thêm Mới) - editMode = 1 (Chỉnh Sửa)
-        this.editMode = 0;
+        this.editMode = this.enums.formMode.editMode;
         this.showDialogDetail();
       } catch (error) {
         console.log(error);
@@ -365,8 +355,8 @@ export default {
      * Author: SANG
      * createdBy: SANG
      * createdDate: 17/11/2022
+     * Mở - Đóng Toast warning Delete
      * */
-    //Mở - Đóng Toast warning Delete
     showMessageDelete() {
       try {
         // bằng false -> true - bằng true -> false
@@ -381,29 +371,32 @@ export default {
      * Author: SANG
      * createdBy: SANG
      * createdDate: 24/11/2022
+     * Hiển thị danh sách nhân viên theo số lượng bản ghi trên trang
      * */
-    // Hiển thị danh sách nhân viên theo số lượng bản ghi trên trang
-    loadDataDefault(selectPage, pageNumber) {
+    loadDataDefault(pageNumber, selectPageSize) {
       try {
         //Hiển thị loading
         this.isShowLoading = true;
+        this.loadingData();
+
         var me = this;
         axios
           .get(
-            "https://amis.manhnv.net/api/v1/Employees/filter?pageSize=" +
-              selectPage +
-              "&pageNumber=" +
-              pageNumber
+            "http://localhost:5077/api/v1/Employees/Filter?pageIndex=" +
+              pageNumber +
+              "&pageSize=" +
+              selectPageSize
           )
           .then((res) => {
             //Lấy giá trị
-            me.employees = res.data.Data;
-
+            me.emp = res.data.Data;
+            console.log(res);
             //Lấy giá trị số trang
-            me.pageCount = res.data.TotalPage;
+            me.recordToTal = res.data.TotalPage;
 
             //Lấy ra số lượng bản ghi
             me.totalRecord = res.data.TotalRecord;
+
             //Dừng Loading
             me.isShowLoading = false;
           })
@@ -420,9 +413,58 @@ export default {
      * Author: SANG
      * createdBy: SANG
      * createdDate: 28/11/2022
+     * Thực Hiện Search theo trang
+     * */
+    stateSearch(pageNumber) {
+      try {
+        //Hiển thị loading
+        this.isShowLoading = true;
+        this.loadingData();
+
+        var me = this;
+        axios
+          .get(
+            "http://localhost:5077/api/v1/Employees/Filter?pageIndex=" +
+              me.pageNumber +
+              "&pageSize=" +
+              me.selectPageSize +
+              "&filter=" +
+              me.txtSearch
+          )
+          .then((res) => {
+            //Lấy giá trị
+            me.emp = res.data.Data;
+
+            //Lấy giá trị số trang
+            me.recordToTal = res.data.TotalPage;
+
+            //Lấy ra số lượng bản ghi
+            me.totalRecord = res.data.TotalRecord;
+
+            //Dừng Loading
+            me.isShowLoading = false;
+          })
+          .catch((res) => {
+            console.log(res);
+          });
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
+    /**
+     * @param {any} date
+     * Author: SANG
+     * createdBy: SANG
+     * createdDate: 28/11/2022
+     * Ấn nút reload -> ReLoading lại Trang
      * */
     btnReLoading() {
-      this.loadDataDefault(this.totalRecord, this.pageNumber);
+      try {
+        this.loadDataDefault(this.pageNumber, this.selectPageSize);
+      } catch (error) {
+        console.log(error);
+      }
     },
 
     /**
@@ -430,31 +472,83 @@ export default {
      * Author: SANG
      * createdBy: SANG
      * createdDate: 28/11/2022
+     * set Giá trị cho số lượng bản ghi
      * */
-    //set Giá trị cho số lượng bản ghi
-    // setDetailSelectPage(numberRecord) {
-    //   this.selectPageSize = numberRecord;
-    // },
+    setDetailSelectPage(numberRecord) {
+      try {
+        this.selectPageSize = numberRecord;
+      } catch (error) {
+        console.log(error);
+      }
+    },
 
     /**
      * @param {any} date
      * Author: SANG
      * createdBy: SANG
      * createdDate: 28/11/2022
+     * set Giá trị mảng được chọn
      * */
-    //set Giá trị mảng được chọn
-    setEmployee(employeeSelected) {
-      this.employeeSelected = employeeSelected;
+    setEmployee(emp) {
+      try {
+        this.employeeSelected = emp;
+      } catch (error) {
+        console.log(error);
+      }
     },
     /**
      * @param {any} date
      * Author: SANG
      * createdBy: SANG
      * createdDate: 28/11/2022
+     * set Giá trị của trạng thái editMode
      * */
-    //set Giá trị của trạng thái editMode
     setEdit(edit) {
-      this.editMode = edit;
+      try {
+        this.editMode = edit;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
+    /**
+     * @param {any} date
+     * Author: SANG
+     * createdBy: SANG
+     * createdDate: 28/11/2022
+     * set Giá trị của trang hiển thị
+     * */
+    setPageNum(pageNumber) {
+      try {
+        this.pageNumber = pageNumber;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
+    /**
+     * @param {any} date
+     * Author: SANG
+     * createdBy: SANG
+     * createdDate: 28/11/2022
+     * */
+    //chuyển giới tính thành String
+    getGender(gender) {
+      try {
+        switch (gender) {
+          case 0:
+            return "Nam";
+          case 1:
+            return "Nữ";
+          case 2:
+            return "Khác";
+
+          default:
+            break;
+        }
+      } catch (error) {
+        console.log(error);
+      }
     },
   },
 
@@ -467,7 +561,7 @@ export default {
      * createdDate: 28/11/2022
      * */
     selectPageSize: function () {
-      this.loadDataDefault(this.selectPageSize, this.pageNumber);
+      this.loadDataDefault(this.pageNumber, this.selectPageSize);
     },
   },
 
@@ -484,10 +578,12 @@ export default {
       leftDrop: "0",
       editMode: 0,
       txtSearch: "",
-      selectPageSize: 10,
       pageNumber: 1,
-      pageCount: 0,
+      selectPageSize: 10,
+      recordToTal: 0,
       totalRecord: 0,
+      isCheckSearch: false,
+      enums: enums,
     };
   },
 };
