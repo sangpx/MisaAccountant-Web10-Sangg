@@ -1,6 +1,5 @@
 <template>
   <paginate
-    :page-count="recordToTal"
     :page-range="3"
     :margin-pages="1"
     :click-handler="clickCallback"
@@ -41,9 +40,6 @@ export default {
   },
 
   props: {
-    recordToTal: {
-      type: Number,
-    },
     selectPageSize: {
       type: Number,
     },

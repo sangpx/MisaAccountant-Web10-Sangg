@@ -90,8 +90,8 @@
                 class="select__input"
                 name="select__input"
               >
-                <option value="45ac3d26-18f2-18a9-3031-644313fbb055">
-                  Phòng Tuyển dụng
+                <option value="35e773ea-5d44-2dda-26a8-6d513e380bde">
+                  Phòng Tổng Giám Đốc
                 </option>
                 <option value="3fa85f64-5717-4562-b3fc-2c963f66afa5">
                   Phòng Đào Tạo 3
@@ -134,12 +134,13 @@
                 <div
                   style="
                     display: flex;
-                    margin-top: 6px;
                     align-items: center;
+                    margin-top: 6px;
                     justify-content: space-around;
                   "
                 >
                   <input
+                    value="0"
                     type="radio"
                     name="gender"
                     checked
@@ -149,6 +150,7 @@
                   />
                   <label class="name__gender" for="male">Nam</label>
                   <input
+                    value="1"
                     type="radio"
                     name="gender"
                     id="female"
@@ -157,6 +159,7 @@
                   />
                   <label class="name__gender" for="female">Nữ</label>
                   <input
+                    value="2"
                     type="radio"
                     name="gender"
                     id="difference"
@@ -257,16 +260,18 @@
       <!-- dialog-footer  -->
       <div class="dialog-footer">
         <div class="dialog-footer__left">
-          <button class="btn btn-cancel">Hủy</button>
+          <button class="btn btn-cancel">{{ this.$t("CANCEL") }}</button>
         </div>
         <div class="dialog-footer__right">
-          <button class="btn btn-store" @click="btnAddData">Cất</button>
+          <button class="btn btn-store" @click="btnAddData">
+            {{ this.$t("ADD") }}
+          </button>
           <button
             @click="btnSaveAndAddData"
             id="btn-store__add"
             class="btn btn-store__add"
           >
-            Cất và Thêm
+            {{ this.$t("SAVEANDADD") }}
           </button>
         </div>
       </div>
@@ -374,7 +379,7 @@ export default {
                 me.$emit("loadDataDefault", me.pageNumber, me.detailSelectPage);
 
                 //đóng Form
-                me.$emit("showDialogDetail");
+                me.$emit("btnShowDialogDetail");
               })
 
               .catch((error) => {
@@ -385,14 +390,12 @@ export default {
           //Form ở chế độ Chỉnh Sửa
           else if (me.editMode == me.enums.formMode.editMode) {
             axios
-              .put(
-                `http://localhost:5077/api/v1/Employees/${me.emp.EmployeeId}`,
-                this.emp
-              )
+              .put("http://localhost:5077/api/v1/Employees", me.emp)
               .then((res) => {
-                me.$emit("loadDataDefault", me.pageNumber, me.selectPageSize);
+                me.$emit("loadDataDefault", me.pageNumber, me.detailSelectPage);
+
                 //đóng Form
-                me.$emit("showDialogDetail");
+                me.$emit("btnShowDialogDetail");
               })
 
               .catch((error) => {
@@ -446,7 +449,7 @@ export default {
           //Form ở chế độ Chỉnh Sửa
           else if (me.editMode == me.enums.formMode.editMode) {
             axios
-              .put(`http://localhost:5077/api/v1/Employees`, me.emp)
+              .put("http://localhost:5077/api/v1/Employees", me.emp)
               .then((res) => {
                 me.$emit("loadDataDefault", me.pageNumber, me.detailSelectPage);
 
@@ -462,7 +465,6 @@ export default {
                 // gọi hàm lấy mã mới
                 me.newEmployeeCode();
               })
-
               .catch((error) => {
                 console.log(error);
               });
@@ -557,8 +559,7 @@ export default {
           .get("http://localhost:5077/api/v1/Employees/NewEmployeeCode")
           .then((res) => {
             let newEmployeeCode = res.data;
-            me.employeeSelected.EmployeeCode = newEmployeeCode;
-            me.emp = me.employeeSelected;
+            me.emp.EmployeeCode = newEmployeeCode;
           })
           .catch((error) => {
             console.log(error);
@@ -615,9 +616,7 @@ export default {
 
     //Format Date
     this.emp.DateOfBirth = this.formatDate(this.emp.DateOfBirth);
-    this.emp.IdentityIssurePlace = this.formatDate(
-      this.emp.IdentityIssurePlace
-    );
+    this.emp.IdentityIssureDate = this.formatDate(this.emp.IdentityIssureDate);
   },
 
   mounted() {

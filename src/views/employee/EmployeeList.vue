@@ -34,23 +34,41 @@
             <thead>
               <tr class="table__tr">
                 <th><input type="checkbox" class="table__input-checkbox" /></th>
-                <th class="th__id">Mã Nhân Viên</th>
-                <th class="th__name">Tên Nhân Viên</th>
-                <th class="th__gender">Giới Tính</th>
-                <th class="th__dateBirth">Ngày Sinh</th>
-                <th class="th__identity-number">Số CMND</th>
-                <th class="th__issure-date">Ngày Cấp</th>
-                <th class="th__issure-place">Nơi Cấp</th>
-                <th class="th__career-title">Chức Danh</th>
-                <th class="th__name-unit--work">Tên Đơn Vị</th>
-                <th class="th__account-number">Số Tài Khoản</th>
-                <th class="th__address">Địa Chỉ</th>
-                <th class="th__email">Email</th>
-                <th class="th__name-bank">Tên Ngân Hàng</th>
-                <th class="th__branch-bank">Chi Nhánh TK Ngân Hàng</th>
-                <th class="th__phone-number">ĐT Di Động</th>
-                <th class="th__landline-phone">ĐT Cố Định</th>
-                <th class="th__function">Chức Năng</th>
+                <th class="th__id">{{ this.$t("EMPLOYEESCODE") }}</th>
+                <th class="th__name">{{ this.$t("EMPLOYEESNAME") }}</th>
+                <th class="th__gender">{{ this.$t("GENDER") }}</th>
+                <th class="th__dateBirth">{{ this.$t("DATEOFBIRTH") }}</th>
+                <th class="th__identity-number">
+                  {{ this.$t("IDENTITYNUMBER") }}
+                </th>
+                <th class="th__issure-date">
+                  {{ this.$t("IDENTITYDATE") }}
+                </th>
+                <th class="th__issure-place">
+                  {{ this.$t("IDENTITYPLACE") }}
+                </th>
+                <th class="th__career-title">
+                  {{ this.$t("CAREERTITLE") }}
+                </th>
+                <th class="th__name-unit--work">
+                  {{ this.$t("WORKINGUNITNAME") }}
+                </th>
+                <th class="th__account-number">
+                  {{ this.$t("ACCOUNTNUMBER") }}
+                </th>
+                <th class="th__address">{{ this.$t("ADDRESS") }}</th>
+                <th class="th__email">{{ this.$t("EMAIL") }}</th>
+                <th class="th__name-bank">{{ this.$t("BANKNAME") }}</th>
+                <th class="th__branch-bank">
+                  {{ this.$t("BRANCHBANK") }}
+                </th>
+                <th class="th__phone-number">
+                  {{ this.$t("PHONENUMBER") }}
+                </th>
+                <th class="th__landline-phone">
+                  {{ this.$t("LANDLINENUMBER") }}
+                </th>
+                <th class="th__function">{{ this.$t("FUNC") }}</th>
               </tr>
             </thead>
             <tbody>
@@ -77,14 +95,16 @@
                 <td class="th__career-title">{{ item.CareerTitle }}</td>
                 <td class="th__name-unit--work">{{ item.WorkingUnitName }}</td>
                 <td class="th__account-number">{{ item.AccountBank }}</td>
-                <td class="th__address">{{ item.Addresss }}</td>
+                <td class="th__address">{{ item.Address }}</td>
                 <td class="th__email">{{ item.Email }}</td>
                 <td class="th__name-bank">{{ item.NameBank }}</td>
                 <td class="th__branch-bank">{{ item.BranchBank }}</td>
                 <td class="th__phone-number">{{ item.PhoneNumber }}</td>
                 <td class="th__landline-phone">{{ item.LandlineNumber }}</td>
                 <td class="th__function">
-                  <span @click="handleOnRowDblClick(item)"> Sửa </span>
+                  <span @click="handleOnRowDblClick(item)">
+                    {{ this.$t("EDIT") }}
+                  </span>
 
                   <span class="icon__edit" @click="handleShowDropMenu(item)">
                     <i class="icofont-caret-down"></i>
@@ -100,8 +120,9 @@
       <div class="paging">
         <div class="paging__left">
           <span
-            >Tổng số: <b>{{ totalRecord }}</b> bản ghi</span
-          >
+            >{{ this.$t("TOTAL") }} <b>{{ totalRecord }}</b>
+            {{ this.$t("RECORD") }}
+          </span>
         </div>
 
         <div class="paging__right">
@@ -125,7 +146,6 @@
                 @stateSearch="stateSearch"
                 :isCheckSearch="isCheckSearch"
                 :selectPageSize="selectPageSize"
-                :recordToTal="recordToTal"
               />
             </div>
           </div>
@@ -196,6 +216,7 @@ export default {
   created() {
     //Thực hiện Loading lại trang khi lần đầu truy cập
     this.loadDataDefault(this.pageNumber, this.selectPageSize);
+    this.loadingData();
   },
 
   methods: {
@@ -211,7 +232,7 @@ export default {
         //form ở chế độ Chỉnh Sửa
         this.editMode = this.enums.formMode.editMode;
         //Hiển thị form chi tiết
-        this.showDialogDetail(item);
+        this.showDialogDetail();
         this.employeeSelected = item;
       } catch (error) {
         console.log(error);
@@ -343,7 +364,7 @@ export default {
     btnShowDialogDetail() {
       try {
         //editMode = 0 (Thêm Mới) - editMode = 1 (Chỉnh Sửa)
-        this.editMode = this.enums.formMode.editMode;
+        this.editMode = this.enums.formMode.addMode;
         this.showDialogDetail();
       } catch (error) {
         console.log(error);
@@ -377,7 +398,6 @@ export default {
       try {
         //Hiển thị loading
         this.isShowLoading = true;
-        this.loadingData();
 
         var me = this;
         axios
@@ -390,9 +410,7 @@ export default {
           .then((res) => {
             //Lấy giá trị
             me.emp = res.data.Data;
-            console.log(res);
-            //Lấy giá trị số trang
-            me.recordToTal = res.data.TotalPage;
+            // console.log(res);
 
             //Lấy ra số lượng bản ghi
             me.totalRecord = res.data.TotalRecord;
@@ -434,9 +452,6 @@ export default {
           .then((res) => {
             //Lấy giá trị
             me.emp = res.data.Data;
-
-            //Lấy giá trị số trang
-            me.recordToTal = res.data.TotalPage;
 
             //Lấy ra số lượng bản ghi
             me.totalRecord = res.data.TotalRecord;
@@ -580,7 +595,6 @@ export default {
       txtSearch: "",
       pageNumber: 1,
       selectPageSize: 10,
-      recordToTal: 0,
       totalRecord: 0,
       isCheckSearch: false,
       enums: enums,

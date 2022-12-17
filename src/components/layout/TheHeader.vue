@@ -3,7 +3,7 @@
     <div class="header__left">
       <div class="header__left-multitasking"></div>
       <div class="header__left-title tool-tip-title">
-        CÔNG TY TNHH SẢN XUẤT - THƯƠNG MẠI - DỊCH VỤ QUI PHÚC
+        {{ this.$t("TITLE_COMPANY") }}
         <i class="icofont-rounded-down"></i>
       </div>
     </div>
@@ -13,7 +13,7 @@
       <div class="header__right-author">
         <div class="author"></div>
         <div class="user__login">
-          Phạm Xuân Sang<i class="icofont-rounded-down"></i>
+          {{ this.$t("TITLE_USER") }}<i class="icofont-rounded-down"></i>
         </div>
       </div>
     </div>
