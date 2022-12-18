@@ -1,5 +1,6 @@
 <template>
   <paginate
+    :page-count="pageCount"
     :page-range="3"
     :margin-pages="1"
     :click-handler="clickCallback"
@@ -29,17 +30,21 @@ export default {
      * */
     clickCallback(pageNumber) {
       //Cập Nhật lại trang đang được chọn
+
       this.$emit("setPageNum", pageNumber);
 
       if (this.isCheckSearch) {
         this.$emit("stateSearch", pageNumber);
       } else {
-        this.$emit("loadDataDefault", this.pageNumber, this.selectPageSize);
+        this.$emit("loadDataDefault", pageNumber, this.selectPageSize);
       }
     },
   },
 
   props: {
+    pageCount: {
+      type: Number,
+    },
     selectPageSize: {
       type: Number,
     },

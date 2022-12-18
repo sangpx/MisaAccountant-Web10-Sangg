@@ -22,6 +22,7 @@
             type="text"
             placeholder="Tìm theo mã, tên nhân viên"
             class="input input-search"
+            v-model="txtSearch"
           />
           <button class="icon_search"></button>
         </div>
@@ -74,7 +75,7 @@
             <tbody>
               <tr
                 v-for="item in employees"
-                :key="item.EmployeeId"
+                :key="item.EmployeeID"
                 class="table__tr"
                 @dblclick="handleOnRowDblClick(item)"
               >
@@ -129,23 +130,26 @@
           <div class="paging__right-select">
             <select
               class="select__paging"
-              v-model="selectPageSize"
               name="select__paging"
+              v-model="selectPageSize"
             >
-              <option value="1">10 bản ghi trên một trang</option>
-              <option value="2">20 bản ghi trên một trang</option>
-              <option value="3">30 bản ghi trên một trang</option>
-              <option value="4">50 bản ghi trên một trang</option>
-              <option value="5">100 bản ghi trên một trang</option>
+              <option value="10">10 bản ghi trên một trang</option>
+              <option value="20">20 bản ghi trên một trang</option>
+              <option value="30">30 bản ghi trên một trang</option>
+              <option value="50">50 bản ghi trên một trang</option>
+              <option value="100">100 bản ghi trên một trang</option>
             </select>
           </div>
 
           <div class="paging__right-page">
             <div class="right-page__content">
               <MISAPaging
+                @setPageNum="setPageNum"
                 @stateSearch="stateSearch"
+                @loadDataDefault="loadDataDefault"
                 :isCheckSearch="isCheckSearch"
                 :selectPageSize="selectPageSize"
+                :pageCount="pageCount"
               />
             </div>
           </div>
@@ -214,9 +218,18 @@ export default {
   props: {},
 
   created() {
-    //Thực hiện Loading lại trang khi lần đầu truy cập
-    this.loadDataDefault(this.pageNumber, this.selectPageSize);
-    this.loadingData();
+    /**
+     * @param {any} date
+     * Author: SANG
+     * createdBy: SANG
+     * createdDate: 15/11/2022
+     * Thực hiện Loading lại trang khi lần đầu truy cập
+     * */
+    try {
+      this.loadDataDefault(this.pageNumber, this.selectPageSize);
+    } catch (error) {
+      console.log(error);
+    }
   },
 
   methods: {
@@ -398,19 +411,22 @@ export default {
       try {
         //Hiển thị loading
         this.isShowLoading = true;
+        // this.loadingData();
 
         var me = this;
         axios
           .get(
             "http://localhost:5077/api/v1/Employees/Filter?pageIndex=" +
-              pageNumber +
+              me.pageNumber +
               "&pageSize=" +
-              selectPageSize
+              me.selectPageSize
           )
           .then((res) => {
             //Lấy giá trị
-            me.emp = res.data.Data;
-            // console.log(res);
+            me.employees = res.data.Data;
+
+            //lấy ra số lượng trang
+            me.pageCount = res.data.TotalPage;
 
             //Lấy ra số lượng bản ghi
             me.totalRecord = res.data.TotalRecord;
@@ -437,7 +453,6 @@ export default {
       try {
         //Hiển thị loading
         this.isShowLoading = true;
-        this.loadingData();
 
         var me = this;
         axios
@@ -451,7 +466,10 @@ export default {
           )
           .then((res) => {
             //Lấy giá trị
-            me.emp = res.data.Data;
+            me.employees = res.data.Data;
+
+            //lấy ra số lượng trang
+            me.pageCount = res.data.TotalPage;
 
             //Lấy ra số lượng bản ghi
             me.totalRecord = res.data.TotalRecord;
@@ -476,7 +494,15 @@ export default {
      * */
     btnReLoading() {
       try {
-        this.loadDataDefault(this.pageNumber, this.selectPageSize);
+        //Đang thực hiện tìm kiếm
+        if (this.isCheckSearch) {
+          this.stateSearch(this.pageNumber);
+        }
+
+        //Dừng tìm kiếm
+        else {
+          this.loadDataDefault(this.pageNumber, this.selectPageSize);
+        }
       } catch (error) {
         console.log(error);
       }
@@ -568,15 +594,36 @@ export default {
   },
 
   watch: {
-    //Theo dõi sự thay đổi tùy chọn hiển thị số lượng bản ghi trên trang
     /**
      * @param {any} date
      * Author: SANG
      * createdBy: SANG
      * createdDate: 28/11/2022
+     * Theo dõi sự thay đổi tùy chọn hiển thị số lượng bản ghi trên trang
      * */
     selectPageSize: function () {
       this.loadDataDefault(this.pageNumber, this.selectPageSize);
+    },
+
+    /**
+     * @param {any} date
+     * Author: SANG
+     * createdBy: SANG
+     * createdDate: 28/11/2022
+     * Theo dõi sự thay đổi khi nhập input tìm kiếm
+     * */
+    txtSearch: function () {
+      this.debounce = setTimeout(() => {
+        // khi txt Search rỗng
+        if (this.txtSearch == "") {
+          this.loadDataDefault(this.pageNumber, this.selectPageSize);
+          this.isCheckSearch = false;
+        } else {
+          this.isCheckSearch = true;
+          //thực hiện gọi hàm search theo trang
+          this.stateSearch(this.pageNumber);
+        }
+      }, 750);
     },
   },
 
@@ -596,6 +643,7 @@ export default {
       pageNumber: 1,
       selectPageSize: 10,
       totalRecord: 0,
+      pageCount: 0,
       isCheckSearch: false,
       enums: enums,
     };

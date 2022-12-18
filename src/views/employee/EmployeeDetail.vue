@@ -310,7 +310,6 @@ export default {
       isShowMessageValidate: false,
       employees: [],
       emp: {},
-      employee: {},
       MessageContent: "",
       titleEmployeeCode: "",
       titleEmployeeName: "",
